@@ -47,11 +47,11 @@ export default {
   padding-top: 8%;
 }
 .box img {
-  width: 10rem;
-  margin-right: 5%;
+  width: 1.1rem;
+  margin-right: .86rem;
   cursor: pointer;
 }
 .box .rowBox {
-  margin-bottom: 3%;
+  margin-bottom: .65rem;
 }
 </style>

@@ -6,7 +6,7 @@
     <div class="loginBox">
       <div class="loginInput">
         <img src="@/assets/login_03.png">
-        <el-input class="loginInputText" v-model="id" placeholder="请输入账号"></el-input>
+        <el-input class="loginInputText" v-model="username" placeholder="请输入账号"></el-input>
       </div>
       <div class="loginPassWord">
         <img src="@/assets/login_04.png">
@@ -25,25 +25,33 @@ export default {
   components: {},
   data () {
     return {
-      id: '',
-      passWord: ''
+      username: 'admin',
+      passWord: '123456'
     }
   },
   mounted () {},
   methods: {
     save () {
-      this.$api.get('/admin/login/doLogin', {}, response => {
-        if (response.status >= 200 && response.status < 300) {
-            console.log(response.data);
+      if (this.username === '') {
+        this.$message.error('用户名不能为空')
+        return
+      } else if (this.passWord === '') {
+        this.$message.error('密码不能为空')
+        return
+      }
+      // 登录
+      this.$api.post('/admin/login/doLogin', {
+        username: this.username,
+        password: this.passWord
+      }).then(res => {
+        console.log(res)
+        if (res.data.code === 1) {
+          this.$router.push({path: '/home'})
         } else {
-            console.log(response.message);
+          console.warn(res.data.msg)
+          this.$message.error(res.data.msg)
         }
-      });
-      // if (this.id === '' || this.passWord === '') {
-      //   return ''
-      // } else {
-      //   this.$router.push({path: '/home'})
-      // }
+      })
     }
   }
 }
@@ -55,11 +63,11 @@ export default {
   background-size: 100% 100%;
   height: 100%;
   text-align: center;
+  font-size: .34rem;
 }
 .loginView .head {
   background: url(~@/assets/login_01.png) no-repeat;
   background-size: 100%;
-  height: 45%;
   width: 100%;
   box-sizing: border-box;
   text-align: center;
@@ -69,12 +77,13 @@ export default {
   width: 40%;
 }
 .loginView .loginBox {
-  padding-top: 4rem;
+  padding-top: .58rem;
 }
 .loginView .loginPassWord,
 .loginView .loginInput {
-  width: 15rem;
-  margin: 1rem auto;
+  width: 2.48rem;
+  margin: 0 auto;
+  margin-bottom: .27rem;
   position: relative;
 }
 .loginView .loginPassWord img,
@@ -88,18 +97,29 @@ export default {
   width: 85%;
   text-align: center;
 }
-.loginView .loginPassWord .el-input__inner,
+.loginView .loginPassWordtText .el-input__inner,
 .loginView .loginInputText .el-input__inner {
-  height: 38px;
-  line-height: 38px;
+  height: .4rem;
   border: none;
+  color: #000;
+  font-size: .1rem;
+}
+.loginView .el-input .el-input__clear {
+  font-size: .15rem;
+}
+.loginView .loginPassWordtText .el-input__suffix {
+  right: 5%;
+  top: 25%;
 }
 .loginView .saveBtn {
   background: #f9ca00;
   color: #666;
-  padding: 12px 50px;
+  padding: .08rem .46rem;
 }
 .loginView .el-button.is-round {
-  padding: 12px 50px;
+  padding: .08rem .46rem;
+  border-radius: 5rem;
+  font-size: .1rem;
+  color: #000;
 }
 </style>

@@ -89,25 +89,26 @@ export default {
     display: flex;
   }
   .left {
-    padding: 1rem 3rem;
+    padding: 1rem;
     width: 20%;
   }
   .left .btn {
-    padding: .5rem 3rem;
+    padding: .1rem .44rem;
+    font-size: .15rem;
     color: #fb882b;
     background: #3c2a36;
     border: 1px solid #653428;
-    border-radius: 50px;
+    border-radius: 5rem;
     font-weight: 500;
     cursor: pointer;
-    margin-bottom: 1rem;
+    margin-bottom: .2rem;
   }
   .left .btn img {
     height: 1.7rem;
   }
   .left .smallBtn {
     display: inline-block;
-    padding: 1rem 2.86rem;
+    padding: .34rem .86rem;
   }
   .left .btnHover,
   .left .btn:hover {
@@ -137,7 +138,7 @@ export default {
     width: 12%;
     color: #fff;
     box-sizing: border-box;
-    padding: .5rem;
+    padding: 1%;
     border-bottom: 1px solid #808080;
     font-size: .4rem;
   }
@@ -154,7 +155,7 @@ export default {
     width: 12%;
     color: #fff;
     box-sizing: border-box;
-    padding: .5rem;
+    padding: 1%;
     border-bottom: 1px solid #808080;
     font-size: .4rem;
   }

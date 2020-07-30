@@ -6,8 +6,11 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import router from './router'
 import axios from 'axios'
+import 'lib-flexible'
+import qs from 'qs'
 
 Vue.prototype.$api = axios
+Vue.prototype.$qs = qs
 axios.defaults.baseURL = '/admin'
 
 Vue.use(ElementUI)

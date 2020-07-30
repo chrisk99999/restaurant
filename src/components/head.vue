@@ -39,26 +39,29 @@ export default {
 <style scoped>
   .head {
     display: flex;
-    padding: 1% 2%;
+    padding: .15rem 0;
+    padding-left: .42rem;
+    padding-right: .19rem;
     background: #2b1814;
   }
   .left {
     flex: 1;
-    padding-top: .3rem;
+    padding-top: .05rem;
   }
   .right {
     display: flex;
   }
   .right span {
     color: #fff;
-    padding: .15rem .5rem;
+    padding: .04rem .1rem;
+    font-size: .1rem;
   }
   .left img {
-    width: 8rem;
+    height: .15rem;
     cursor: pointer;
   }
   .right img {
-    width: 3rem;
+    height: .2rem;
     cursor: pointer;
   }
 </style>

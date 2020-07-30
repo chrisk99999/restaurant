@@ -34,8 +34,14 @@
             </el-select>
           </div>
           <div class="headNum">
-            <div class="num"><i class="el-icon-circle-check"></i> 1588</div>
-            <div class="num"><i class="el-icon-circle-close"></i>25</div>
+            <div class="num">
+              <img src="@/assets/score_01.png" style="position: absolute;left: -0.6rem;top: 0;width: 2.3rem;" alt="">
+              1588
+            </div>
+            <div class="num">
+              <img src="@/assets/score_02.png" style="position: absolute;left: -0.6rem;top: 0;width: 2.3rem;" alt="">
+              25
+            </div>
           </div>
         </div>
         <div class="li">
@@ -49,9 +55,9 @@
           </div>
           <div class="time">
             <div style="text-align: right;">
-              <i size="2rem" class="el-icon-circle-check"></i>
+              <img src="@/assets/score_01.png" style="width: 2rem;" alt="">
             </div>
-            <p style="color: #aaa;">2020.07.27 11:25:53</p>
+            <p style="color: #aaa;margin-top: 0;">2020.07.27 11:25:53</p>
           </div>
         </div>
         <div class="li">
@@ -65,9 +71,9 @@
           </div>
           <div class="time">
             <div style="text-align: right;">
-              <i size="2rem" class="el-icon-circle-check"></i>
+              <img src="@/assets/score_02.png" style="width: 2rem;" alt="">
             </div>
-            <p style="color: #aaa;">2020.07.27 11:25:53</p>
+            <p style="color: #aaa;margin-top: 0;">2020.07.27 11:25:53</p>
           </div>
         </div>
         <div class="li">
@@ -81,9 +87,9 @@
           </div>
           <div class="time">
             <div style="text-align: right;">
-              <i size="2rem" class="el-icon-circle-check"></i>
+              <img src="@/assets/score_01.png" style="width: 2rem;" alt="">
             </div>
-            <p style="color: #aaa;">2020.07.27 11:25:53</p>
+            <p style="color: #aaa;margin-top: 0;">2020.07.27 11:25:53</p>
           </div>
         </div>
       </div>
@@ -230,7 +236,7 @@ export default {
           value: '4'
         }
       ],
-      isReta: false,
+      isReta: true,
       rate: 4
     }
   },
@@ -247,25 +253,23 @@ export default {
     display: flex;
   }
   .left {
-    padding: 1rem 3rem;
+    padding: 1rem;
     width: 20%;
   }
   .left .btn {
-    padding: 1rem 3rem;
+    padding: .1rem .44rem;
+    font-size: .15rem;
     color: #fb882b;
     background: #3c2a36;
     border: 1px solid #653428;
-    border-radius: 50px;
+    border-radius: 5rem;
     font-weight: 500;
     cursor: pointer;
-    margin-bottom: 1rem;
-  }
-  .left .btn img {
-    height: 1.7rem;
+    margin-bottom: .2rem;
   }
   .left .smallBtn {
     display: inline-block;
-    padding: 1rem 2.86rem;
+    padding: .34rem .86rem;
   }
   .left .btnHover,
   .left .btn:hover {
@@ -299,6 +303,9 @@ export default {
     display: inline-block;
     border-radius: 50px;
     margin-right: .5rem;
+    position: relative;
+    min-width: 40px;
+    text-align: right;
   }
   .li {
     display: flex;

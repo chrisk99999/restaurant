@@ -102,22 +102,23 @@ export default {
     display: flex;
   }
   .left {
-    padding: 1rem 3rem;
+    padding: 1rem;
     width: 20%;
   }
   .left .btn {
-    padding: 1rem 3rem;
+    padding: .1rem .44rem;
+    font-size: .15rem;
     color: #fb882b;
     background: #3c2a36;
     border: 1px solid #653428;
-    border-radius: 50px;
+    border-radius: 5rem;
     font-weight: 500;
     cursor: pointer;
-    margin-bottom: 1rem;
+    margin-bottom: .2rem;
   }
   .left .smallBtn {
     display: inline-block;
-    padding: 1rem 2.86rem;
+    padding: .34rem .86rem;
   }
   .left .btnHover,
   .left .btn:hover {
@@ -140,26 +141,26 @@ export default {
   }
   .card {
     width: 40%;
-    height: 8rem;
+    height: 15rem;
     background: url(~@/assets/monthlyReport_02.png) no-repeat;
-    background-size: 100% 100%;
+    background-size: 100%;
     margin-right: 4%;
     margin-top: 3%;
-    margin-bottom: 3%;
+    /* margin-bottom: 3%; */
     box-sizing: border-box;
     color: #fff;
   }
   .card2 {
     background: url(~@/assets/monthlyReport_03.png) no-repeat;
-    background-size: 100% 100%;
+    background-size: 100%;
   }
   .card3 {
     background: url(~@/assets/monthlyReport_04.png) no-repeat;
-    background-size: 100% 100%;
+    background-size: 100%;
   }
   .card4 {
     background: url(~@/assets/monthlyReport_05.png) no-repeat;
-    background-size: 100% 100%;
+    background-size: 100%;
   }
   .cardHead {
     text-align: right;
@@ -174,19 +175,19 @@ export default {
     border-bottom: 1px solid #fff;
     width: fit-content;
     margin: 0 auto;
-    padding-bottom: 1rem;
+    padding-top: 5%;
+    margin-bottom: 5%;
   }
   .cardText {
     font-size: 1.2rem;
     width: fit-content;
     margin: 0 auto;
-    padding-top: .6rem;
   }
   .rateBox {
     padding-top: .6rem;
   }
   .cardContent {
-    padding-top: 5%;
+    padding-top: 10%;
   }
   .cardContent img {
     width: 2rem;

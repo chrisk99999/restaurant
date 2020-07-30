@@ -47,33 +47,36 @@ export default {
   text-align: center;
 }
 .logo {
-  padding: 8rem;
+  padding: 1.13rem;
+}
+.logoCn img {
+  padding-bottom: 1.13rem;
 }
 .logoCn img,
 .logo img {
-  width: 23rem;
+  width: 1.9rem;
 }
 .progressBarBox {
-  padding-top: 5rem;
 }
 .progressBar {
-  width: 10rem;
+  width: .86rem;
   background: #52352d;
-  border-radius: 50px;
-  height: 1rem;
+  border-radius: 5rem;
+  height: .1rem;
   margin: 0 auto;
   box-sizing: border-box;
-  padding: .2rem;
+  padding: .02rem;
 }
 .progressBarHover {
   width: 0%;
   background: #dc6841;
-  border-radius: 50px;
-  height: .6rem;
+  border-radius: 5rem;
+  height: .06rem;
 }
 .progressBarText {
   text-align: center;
   color: #dc6841;
-  padding-top: .2rem;
+  padding-top: .1rem;
+  font-size: .1rem;
 }
 </style>

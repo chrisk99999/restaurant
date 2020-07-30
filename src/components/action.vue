@@ -51,11 +51,14 @@ export default {
   height: 100%;
   display: flex;
   flex-flow: column;
+  overflow: hidden;
 }
 .box {
   flex: 1;
   background: url(~@/assets/home_01.png) no-repeat top left;
   background-size: 100% 100%;
   text-align: center;
+  height: 100%;
+  width: 100%;
 }
 </style>

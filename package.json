@@ -16,6 +16,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "element-ui": "^2.13.2",
+    "lib-flexible": "^0.3.2",
     "stylus": "0.52.4",
     "stylus-loader": "^3.0.1",
     "vue": "^2.5.2",
@@ -66,6 +67,7 @@
     "postcss-import": "^11.0.0",
     "postcss-loader": "^2.0.8",
     "postcss-url": "^7.2.1",
+    "px2rem-loader": "^0.1.9",
     "rimraf": "^2.6.0",
     "sass-loader": "^9.0.2",
     "selenium-server": "^3.0.1",

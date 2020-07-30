@@ -2,44 +2,183 @@
   <div class="nutrition">
     <!-- 营养 -->
     <div class="left">
-      <div>
-        <div class="btn">06-11 第一周</div>
+      <div class="block">
+        <el-date-picker
+          v-model="month"
+          type="month"
+          placeholder="选择月"
+          @change="monthChange">
+        </el-date-picker>
       </div>
-      <div>
-        <div class="btn btnHover">06-11 第二周</div>
-      </div>
-      <div>
-        <div class="btn">06-11 第三周</div>
-      </div>
-      <div>
-        <div class="btn">06-11 第四周</div>
-      </div>
-      <div>
-        <div class="btn addBtn"><img src="@/assets/monthlyReport_01.png" alt=""></div>
+      <div v-for="(item, i) in monthList" :key="i">
+        <div :class="!item.isSelect ? 'btn' : 'btn btnHover'" @click="selectDate(item)">{{item.lists}}</div>
       </div>
     </div>
     <div class="right">
-      <div class="cardBox">
-        <div class="card">
-          <div class="cardText">
-            本周已定 52 份
+      <div v-if="!isUpdata" class="rightBox">
+        <div class="cardList">
+          <div class="cardBox">
+            <div class="card">
+              <div class="cardContent">
+                <div class="cardImg">
+                  <img src="@/assets/nutrition_01.png" alt="">
+                  <div class="cardImgHeadTag">
+                    <span style="color: #e9bc2a;padding-left: .02rem;padding-right: .15rem;">人气</span>
+                    <span style="color: #4b3626;">主厨推荐</span>
+                  </div>
+                  <div class="cardImgBottomTag">限量1</div>
+                </div>
+                <div class="cardContent_box">
+                  <div class="cardContent_tit">启博特利鸡肉色拉</div>
+                  <div class="cardContent_text">启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉</div>
+                </div>
+              </div>
+            </div>
+            <div class="card card2">
+              <div class="cardText">
+                本周已定 52 份
+              </div>
+            </div>
+          </div>
+          <div class="cardBox">
+            <div class="card">
+              <div class="cardContent">
+                <div class="cardImg">
+                  <img src="@/assets/nutrition_01.png" alt="">
+                  <div class="cardImgHeadTag">
+                    <span style="color: #e9bc2a;padding-left: .02rem;padding-right: .15rem;">人气</span>
+                    <span style="color: #4b3626;">主厨推荐</span>
+                  </div>
+                  <div class="cardImgBottomTag">限量1</div>
+                </div>
+                <div class="cardContent_box">
+                  <div class="cardContent_tit">启博特利鸡肉色拉</div>
+                  <div class="cardContent_text">启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉</div>
+                </div>
+              </div>
+            </div>
+            <div class="card card2">
+              <div class="cardText">
+                本周已定 52 份
+              </div>
+            </div>
+          </div>
+          <div class="cardBox">
+            <div class="card">
+              <div class="cardContent">
+                <div class="cardImg">
+                  <img src="@/assets/nutrition_01.png" alt="">
+                  <div class="cardImgHeadTag">
+                    <span style="color: #e9bc2a;padding-left: .02rem;padding-right: .15rem;">人气</span>
+                    <span style="color: #4b3626;">主厨推荐</span>
+                  </div>
+                  <div class="cardImgBottomTag">限量1</div>
+                </div>
+                <div class="cardContent_box">
+                  <div class="cardContent_tit">启博特利鸡肉色拉</div>
+                  <div class="cardContent_text">启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉</div>
+                </div>
+              </div>
+            </div>
+            <div class="card card2">
+              <div class="cardText">
+                本周已定 52 份
+              </div>
+            </div>
+          </div>
+          <div class="cardBox">
+            <div class="card">
+              <div class="cardContent">
+                <div class="cardImg">
+                  <img src="@/assets/nutrition_01.png" alt="">
+                  <div class="cardImgHeadTag">
+                    <span style="color: #e9bc2a;padding-left: .02rem;padding-right: .15rem;">人气</span>
+                    <span style="color: #4b3626;">主厨推荐</span>
+                  </div>
+                  <div class="cardImgBottomTag">限量1</div>
+                </div>
+                <div class="cardContent_box">
+                  <div class="cardContent_tit">启博特利鸡肉色拉</div>
+                  <div class="cardContent_text">启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉</div>
+                </div>
+              </div>
+            </div>
+            <div class="card card2">
+              <div class="cardText">
+                本周已定 52 份
+              </div>
+            </div>
           </div>
         </div>
-        <div class="card card2">
-          <div class="cardText">
-            本周已定 52 份
-          </div>
+        <div class="bottomBtn" style="padding-right: .15rem;">
+          <el-button type="warning" @click="checkUpdata" round>添加</el-button>
         </div>
       </div>
-      <div class="cardBox">
-        <div class="card">
-          <div class="cardText">
-            本周已定 52 份
+      <div v-else class="updataBox">
+        <div class="phoneView">
+          <div class="phone_head">06-19 第三周</div>
+          <div class="cardList">
+            <div class="cardBox">
+              <div class="card">
+                <div class="cardContent">
+                  <div class="cardImg">
+                    <img src="@/assets/nutrition_01.png" alt="">
+                    <div class="cardImgHeadTag">
+                      <span style="color: #e9bc2a;padding-left: .02rem;padding-right: .15rem;">人气</span>
+                      <span style="color: #4b3626;">主厨推荐</span>
+                    </div>
+                    <div class="cardImgBottomTag">限量1</div>
+                  </div>
+                  <div class="cardContent_box">
+                    <div class="cardContent_tit">启博特利鸡肉色拉</div>
+                    <div class="cardContent_text">启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="addCard">
+              <img src="@/assets/nutrition_03.png" alt="">
+            </div>
           </div>
         </div>
-        <div class="card card4">
-          <div class="cardText">
-            本周已定 52 份
+        <div class="updataPhone">
+          <el-input v-model="phone.tit" placeholder="请输入内容"></el-input>
+          <el-input v-model="phone.num" class="num" style="width: 35%;padding-top: .1rem;font-size: .05rem;"  placeholder="请输入库存">
+            <template slot="prepend">库存：</template>
+          </el-input>
+          <el-input type="textarea" resize="none" v-model="phone.textarea" :rows="6" placeholder="请输入内容" style="font-size: .1rem;padding-top: .1rem;" ></el-input>
+          <el-upload
+            class="avatar-uploader"
+            action="/admin/admin/api/webUploaderImages"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload">
+            <div class="uploadBox">
+              <img v-if="phone.imageUrl" style="max-width: 90%;height: 85%;margin-top: 2%;" :src="phone.imageUrl" class="avatar">
+              <img v-else style="width: .5rem;margin: .3rem 0;" src="@/assets/nutrition_03.png" alt="">
+            </div>
+          </el-upload>
+          <div style="margin-top: .1rem;display: flex;">
+            <div style="display: flex;margin-right: .2rem;">
+              <div class="cardImgHeadTag">
+                <span style="color: #e9bc2a;padding-left: .02rem;padding-right: .15rem;">人气</span>
+                <span style="color: #4b3626;">主厨推荐</span>
+              </div>
+              <img style="cursor: pointer;height: 0.15rem;padding-top: .04rem;padding-left: .04rem;" src="@/assets/nutrition_04.png" alt="">
+            </div>
+            <div style="display: flex;margin-right: .2rem;">
+              <div class="cardImgHeadTag noneTag">
+                <span style="color: #aaa;padding-left: .02rem;padding-right: .4rem;">+</span>
+                <span style="color: #aaa;padding-right: .05rem;">+</span>
+              </div>
+              <img style="cursor: pointer;height: 0.15rem;padding-top: .04rem;padding-left: .04rem;" src="@/assets/nutrition_06.png" alt="">
+            </div>
+            <div class="addTag">
+              <img src="@/assets/nutrition_07.png" alt="">
+            </div>
+          </div>
+          <div class="bottomBtn">
+            <el-button type="warning" round>保存</el-button>
           </div>
         </div>
       </div>
@@ -59,10 +198,103 @@ export default {
   components: {},
   data () {
     return {
+      month: '',
+      monthList: [],
+      isUpdata: false,
+      phone: {
+        tit: '',
+        num: '',
+        textarea: '',
+        imageUrl: ''
+      }
     }
   },
   mounted () {},
   methods: {
+    // 时间格式转换
+    formatDate (date) {
+      var year = date.getFullYear()
+      var month = this.format(date.getMonth() + 1)
+      return year + '-' + month
+    },
+    format (val) {
+      return Number(val) < 10 ? '0' + val : '' + val
+    },
+    // 获取月周列表
+    getMonthList (date) {
+      let obj = this.$qs.stringify({
+        date: date
+      })
+      this.$api.post('/admin/api/weekly', obj).then(res => {
+        if (res.data.code === 1) {
+          console.warn(res.data)
+          let list = res.data.date
+          let data = []
+          list.forEach(item => {
+            data.push({
+              ...item,
+              isSelect: false
+            })
+          })
+          data[0].isSelect = true
+          // this.selectMonth = {
+          //   time: data[0].time,
+          //   week: data[0].lists
+          // }
+          // this.selectMonthStatus = 0
+          // this.weeklySelect({
+          //   time: this.selectMonth.time,
+          //   status: this.selectMonthStatus
+          // })
+          this.monthList = data
+          // this.$router.push({path: '/home'})
+        } else {
+          console.warn(res.data.msg)
+          this.$message.error(res.data.msg)
+        }
+      })
+    },
+    // 选择月份
+    monthChange (val) {
+      this.getMonthList(this.formatDate(val))
+    },
+    // 选择月周列表
+    selectDate (item) {
+      this.monthList.forEach(monthItem => {
+        monthItem.isSelect = false
+      })
+      item.isSelect = true
+      // this.selectMonth = item.time
+      this.selectMonth = {
+        time: item.time,
+        week: item.lists
+      }
+      // this.selectMonthStatus = 0
+      // this.weeklySelect(item)
+    },
+    handleAvatarSuccess (res, file) {
+      this.phone.imageUrl = 'http://ep.zerom.cn' + res.data.path
+      console.log(this.phone.imageUrl)
+    },
+    beforeAvatarUpload (file) {
+      const isJPG = file.type === 'image/jpeg' || file.type === 'image/png'
+      const isLt2M = file.size / 1024 / 1024 < 2
+      console.log(file.type)
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!')
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!')
+      }
+      return isJPG && isLt2M
+    },
+    checkUpdata (type) {
+      this.isUpdata = !this.isUpdata
+      // if (type === 'add') {
+      // } else {
+      // }
+    }
   }
 }
 </script>
@@ -71,25 +303,36 @@ export default {
   .nutrition {
     width: 100%;
     height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
     display: flex;
   }
   .left {
-    padding: 1rem 3rem;
+    padding: .28rem;
     width: 20%;
   }
+  .left .el-date-editor.el-input {
+    width: 100%;
+    margin-bottom: .2rem;
+  }
+  /* .el-input--prefix .el-input__inner */
+  .left .el-input--prefix .el-input__inner {
+    padding-left: .2rem;
+  }
   .left .btn {
-    padding: 1rem 3rem;
+    padding: .1rem .44rem;
+    font-size: .15rem;
     color: #fb882b;
     background: #3c2a36;
     border: 1px solid #653428;
-    border-radius: 50px;
+    border-radius: 5rem;
     font-weight: 500;
     cursor: pointer;
-    margin-bottom: 1rem;
+    margin-bottom: .2rem;
   }
   .left .smallBtn {
     display: inline-block;
-    padding: 1rem 2.86rem;
+    padding: .34rem .86rem;
   }
   .left .btnHover,
   .left .btn:hover {
@@ -101,36 +344,68 @@ export default {
     background: #ffffcc;
   }
   .left .addBtn img {
-    height: 1rem;
+    height: .1rem;
   }
   .right {
+    width: 100%;
     flex: 1;
+    height: 99%;
+    overflow: hidden;
+    padding-top: 1%;
+    padding-right: 1%;
+  }
+  .updataBox,
+  .rightBox {
     border: 1px solid #c29b29;
     border-radius: 10px;
-    margin-top: 1rem;
     background: #3c2a26;
+    box-sizing: border-box;
+    overflow: hidden;
+    width: 100%;
+    height: 90%;
+    display: flex;
+    flex-flow: column;
+    padding: 2% 0;
+  }
+  .cardList {
+    flex: 1;
+    overflow: auto;
+    padding: 0 2%;
+    height: 50%;
   }
   .cardBox {
     display: flex;
     text-align: center;
     justify-content: center;
+    margin-bottom: 2%;
+  }
+  .card:nth-child(1) {
+    margin-right: 5%;
   }
   .card {
-    width: 40%;
-    height: 8rem;
+    /* width: 40%; */
+    flex: 1;
     background-size: 100% 100%;
-    margin-right: 4%;
+    /* margin-right: 4%;
     margin-top: 3%;
-    margin-bottom: 3%;
+    margin-bottom: 3%; */
     box-sizing: border-box;
     color: #fff;
     border: 1px solid #663024;
   }
+  .bottomBtn {
+    padding-top: 3%;
+  }
+  .bottomBtn .el-button {
+    padding: .06rem .2rem;
+    border-radius: 5rem;
+  }
+  .bottomBtn .el-button--warning {
+    color: #333;
+  }
   .card2 {
     background: url(~@/assets/monthlyReport_02.png) no-repeat;
     background-size: 100% 100%;
-  }
-  .card3 {
   }
   .card4 {
     background: url(~@/assets/monthlyReport_03.png) no-repeat;
@@ -144,22 +419,137 @@ export default {
   }
   .card4 .cardText,
   .card2 .cardText {
-    font-size: 2rem;
-    padding-top: 2.2rem;
+    font-size: .29rem;
+    padding: 10% 0;
   }
   .rateBox {
     padding-top: .6rem;
   }
   .cardContent {
-    padding-top: 5%;
+    display: flex;
+    padding: .03rem;
+    position: relative;
   }
-  .cardContent img {
-    width: 2rem;
+  .cardContent .cardImg img{
+    height: 1rem;
+    width: 1rem;
   }
-  .cardContentSpan {
-    font-size: 1.5rem;
+  .cardContent .cardImgHeadTag {
+    display: flex;
+    background: url(~@/assets/nutrition_02.png) no-repeat;
+    background-size: 100% 100%;
+    width: max-content;
+    padding: .05rem;
+    position: absolute;
+    top: 5%;
+    left: 0.5%;
   }
-  .cardContent .cardImg {
-    width: 1.2rem;
+  .cardContent .cardImgBottomTag {
+    position: absolute;
+    padding: .02rem;
+    bottom: 8%;
+    left: 2%;
+    background: rgba(0, 0, 0, .3);
+    border-radius: .03rem;
+  }
+  .cardContent_box {
+    text-align: left;
+    padding: .05rem;
+  }
+  .cardContent_box .cardContent_tit {
+    font-size: .13rem;
+    color: #fb882b;
+  }
+  .cardContent_box .cardContent_text {
+    font-size: .07rem;
+    padding-top: .1rem;
+    line-height: 1.8;
+  }
+  .updataBox {
+    flex-flow: nowrap;
+    padding: 0;
+    border-radius: .2rem;
+  }
+  .updataBox .phoneView {
+    width: 2.8rem;
+    border: 1px solid #fbcd2b;
+    border-radius: .2rem;
+    height: 100%;
+    box-sizing: border-box;
+    background: #51352b;
+    overflow: auto;
+  }
+  .updataBox .phoneView .phone_head {
+    color: #fff;
+    font-size: .14rem;
+    padding: .14rem;
+    text-align: left;
+  }
+  .updataBox .phoneView .cardList {
+    height: 80%;
+    padding: 0 .14rem;
+  }
+  .updataBox .phoneView .card {
+    background: #3c2a26;
+  }
+  .updataBox .phoneView .addCard {
+    padding: .25rem;
+    background: #3c2a26;
+    width: max-content;
+    cursor: pointer;
+  }
+  .updataBox .phoneView .addCard img {
+    height: .3rem;
+  }
+  .updataPhone {
+    flex: 1;
+    box-sizing: border-box;
+    padding: .15rem .3rem;
+    text-align: left;
+  }
+  .uploadBox {
+    border: 0.005208rem solid #663024;
+    border-radius: .05rem;
+    text-align: center;
+    width: 3.91rem;
+    height: 1.2rem;
+    margin-top: .1rem;
+    box-sizing: border-box;
+  }
+  .updataPhone .cardImgHeadTag {
+    display: flex;
+    background: url(~@/assets/nutrition_02.png) no-repeat;
+    background-size: 100% 100%;
+    width: max-content;
+    padding: .05rem;
+    /* position: absolute;
+    top: 5%;
+    left: 0.5%; */
+  }
+  .updataPhone .noneTag {
+    display: flex;
+    background: url(~@/assets/nutrition_05.png) no-repeat;
+    background-size: 100% 100%;
+    width: max-content;
+    padding: .05rem;
+    /* position: absolute;
+    top: 5%;
+    left: 0.5%; */
+  }
+  .updataPhone .addTag {
+    background: rgba(255, 255, 255, .1);
+    padding: .02rem .3rem;
+    border-radius: .05rem;
+    cursor: pointer;
+  }
+  .updataPhone .addTag img {
+    height: 0.15rem;
+  }
+  .bottomBtn {
+    padding: .2rem 0;
+    text-align: right;
+  }
+  .bottomBtn .el-button--warning {
+    color: #333;
   }
 </style>
