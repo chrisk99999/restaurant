@@ -17,95 +17,31 @@
     <div class="right">
       <div v-if="!isUpdata" class="rightBox">
         <div class="cardList">
-          <div class="cardBox">
-            <div class="card">
+          <div class="cardBox" v-for="(item, i) in melaList" :key="i">
+            <div class="card" @click="checkUpdata('updata', i)">
               <div class="cardContent">
                 <div class="cardImg">
-                  <img src="@/assets/nutrition_01.png" alt="">
-                  <div class="cardImgHeadTag">
+                  <el-image class="photo" fit="cover" :src="item.imageUrl">
+                    <div slot="error" style="width: 1rem;height: 1rem;box-sizing: border-box;border: 1px solid #663024;" class="image-slot">
+                      <i style="font-size: .3rem;margin-top: 0.35rem;" class="el-icon-picture-outline"></i>
+                    </div>
+                  </el-image>
+                  <!-- <img src="@/assets/nutrition_01.png" alt=""> -->
+                  <div class="cardImgHeadTag" v-if="item.type">
                     <span style="color: #e9bc2a;padding-left: .02rem;padding-right: .15rem;">人气</span>
                     <span style="color: #4b3626;">主厨推荐</span>
                   </div>
-                  <div class="cardImgBottomTag">限量1</div>
+                  <div class="cardImgBottomTag" v-if="item.limit">限量{{item.limit}}</div>
                 </div>
                 <div class="cardContent_box">
-                  <div class="cardContent_tit">启博特利鸡肉色拉</div>
-                  <div class="cardContent_text">启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉</div>
+                  <div class="cardContent_tit">{{item.title}}</div>
+                  <div class="cardContent_text">{{item.content}}</div>
                 </div>
               </div>
             </div>
             <div class="card card2">
               <div class="cardText">
-                本周已定 52 份
-              </div>
-            </div>
-          </div>
-          <div class="cardBox">
-            <div class="card">
-              <div class="cardContent">
-                <div class="cardImg">
-                  <img src="@/assets/nutrition_01.png" alt="">
-                  <div class="cardImgHeadTag">
-                    <span style="color: #e9bc2a;padding-left: .02rem;padding-right: .15rem;">人气</span>
-                    <span style="color: #4b3626;">主厨推荐</span>
-                  </div>
-                  <div class="cardImgBottomTag">限量1</div>
-                </div>
-                <div class="cardContent_box">
-                  <div class="cardContent_tit">启博特利鸡肉色拉</div>
-                  <div class="cardContent_text">启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉</div>
-                </div>
-              </div>
-            </div>
-            <div class="card card2">
-              <div class="cardText">
-                本周已定 52 份
-              </div>
-            </div>
-          </div>
-          <div class="cardBox">
-            <div class="card">
-              <div class="cardContent">
-                <div class="cardImg">
-                  <img src="@/assets/nutrition_01.png" alt="">
-                  <div class="cardImgHeadTag">
-                    <span style="color: #e9bc2a;padding-left: .02rem;padding-right: .15rem;">人气</span>
-                    <span style="color: #4b3626;">主厨推荐</span>
-                  </div>
-                  <div class="cardImgBottomTag">限量1</div>
-                </div>
-                <div class="cardContent_box">
-                  <div class="cardContent_tit">启博特利鸡肉色拉</div>
-                  <div class="cardContent_text">启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉</div>
-                </div>
-              </div>
-            </div>
-            <div class="card card2">
-              <div class="cardText">
-                本周已定 52 份
-              </div>
-            </div>
-          </div>
-          <div class="cardBox">
-            <div class="card">
-              <div class="cardContent">
-                <div class="cardImg">
-                  <img src="@/assets/nutrition_01.png" alt="">
-                  <div class="cardImgHeadTag">
-                    <span style="color: #e9bc2a;padding-left: .02rem;padding-right: .15rem;">人气</span>
-                    <span style="color: #4b3626;">主厨推荐</span>
-                  </div>
-                  <div class="cardImgBottomTag">限量1</div>
-                </div>
-                <div class="cardContent_box">
-                  <div class="cardContent_tit">启博特利鸡肉色拉</div>
-                  <div class="cardContent_text">启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉</div>
-                </div>
-              </div>
-            </div>
-            <div class="card card2">
-              <div class="cardText">
-                本周已定 52 份
+                本周已定 {{item.click}} 份
               </div>
             </div>
           </div>
@@ -116,37 +52,42 @@
       </div>
       <div v-else class="updataBox">
         <div class="phoneView">
-          <div class="phone_head">06-19 第三周</div>
+          <div class="phone_head">{{selectMonth.lists}}</div>
           <div class="cardList">
-            <div class="cardBox">
-              <div class="card">
-                <div class="cardContent">
-                  <div class="cardImg">
-                    <img src="@/assets/nutrition_01.png" alt="">
-                    <div class="cardImgHeadTag">
-                      <span style="color: #e9bc2a;padding-left: .02rem;padding-right: .15rem;">人气</span>
-                      <span style="color: #4b3626;">主厨推荐</span>
+          <div class="cardBox" @click="clickCard(item)" v-for="(item, i) in melaList" :key="i">
+            <div class="card">
+              <div class="cardContent">
+                <div class="cardImg">
+                  <el-image class="photo" fit="cover" :src="item.imageUrl">
+                    <div slot="error" style="width: 1rem;height: 1rem;box-sizing: border-box;border: 1px solid #663024;" class="image-slot">
+                      <i style="font-size: .3rem;margin-top: 0.35rem;" class="el-icon-picture-outline"></i>
                     </div>
-                    <div class="cardImgBottomTag">限量1</div>
+                  </el-image>
+                  <!-- <img src="@/assets/nutrition_01.png" alt=""> -->
+                  <div class="cardImgHeadTag" v-if="item.type">
+                    <span style="color: #e9bc2a;padding-left: .02rem;padding-right: .15rem;">人气</span>
+                    <span style="color: #4b3626;">主厨推荐</span>
                   </div>
-                  <div class="cardContent_box">
-                    <div class="cardContent_tit">启博特利鸡肉色拉</div>
-                    <div class="cardContent_text">启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉启博特利鸡肉色拉</div>
-                  </div>
+                  <div class="cardImgBottomTag" v-if="item.limit">限量{{item.limit}}</div>
+                </div>
+                <div class="cardContent_box">
+                  <div class="cardContent_tit">{{item.title}}</div>
+                  <div class="cardContent_text">{{item.content}}</div>
                 </div>
               </div>
             </div>
-            <div class="addCard">
+          </div>
+            <div class="addCard" @click="addCard">
               <img src="@/assets/nutrition_03.png" alt="">
             </div>
           </div>
         </div>
         <div class="updataPhone">
-          <el-input v-model="phone.tit" placeholder="请输入内容"></el-input>
+          <el-input v-model="phone.title" placeholder="请输入标题"></el-input>
           <el-input v-model="phone.num" class="num" style="width: 35%;padding-top: .1rem;font-size: .05rem;"  placeholder="请输入库存">
             <template slot="prepend">库存：</template>
           </el-input>
-          <el-input type="textarea" resize="none" v-model="phone.textarea" :rows="6" placeholder="请输入内容" style="font-size: .1rem;padding-top: .1rem;" ></el-input>
+          <el-input type="textarea" resize="none" v-model="phone.content" :rows="6" placeholder="请输入内容" style="font-size: .1rem;padding-top: .1rem;" ></el-input>
           <el-upload
             class="avatar-uploader"
             action="/admin/admin/api/webUploaderImages"
@@ -159,26 +100,30 @@
             </div>
           </el-upload>
           <div style="margin-top: .1rem;display: flex;">
-            <div style="display: flex;margin-right: .2rem;">
+            <div style="display: flex;margin-right: .2rem;" v-if="phone.type" @click="phone.type = 0">
               <div class="cardImgHeadTag">
                 <span style="color: #e9bc2a;padding-left: .02rem;padding-right: .15rem;">人气</span>
                 <span style="color: #4b3626;">主厨推荐</span>
               </div>
               <img style="cursor: pointer;height: 0.15rem;padding-top: .04rem;padding-left: .04rem;" src="@/assets/nutrition_04.png" alt="">
             </div>
-            <div style="display: flex;margin-right: .2rem;">
+            <div style="display: flex;margin-right: .2rem;" v-else @click="phone.type = 1">
               <div class="cardImgHeadTag noneTag">
                 <span style="color: #aaa;padding-left: .02rem;padding-right: .4rem;">+</span>
                 <span style="color: #aaa;padding-right: .05rem;">+</span>
               </div>
               <img style="cursor: pointer;height: 0.15rem;padding-top: .04rem;padding-left: .04rem;" src="@/assets/nutrition_06.png" alt="">
             </div>
-            <div class="addTag">
+            <div class="addTag" v-if="!phone.limit" @click="phone.limit = 1">
               <img src="@/assets/nutrition_07.png" alt="">
+            </div>
+            <div class="addTag" v-else style="padding: .02rem .1rem;">
+              <input v-model="phone.limit" maxlength="5" @input="isNumber" type="text">
+              <img src="@/assets/nutrition_04.png" @click="phone.limit = 0" alt="">
             </div>
           </div>
           <div class="bottomBtn">
-            <el-button type="warning" round>保存</el-button>
+            <el-button type="warning" @click="savePhone" round>保存</el-button>
           </div>
         </div>
       </div>
@@ -200,13 +145,10 @@ export default {
     return {
       month: '',
       monthList: [],
+      selectMonth: {},
       isUpdata: false,
-      phone: {
-        tit: '',
-        num: '',
-        textarea: '',
-        imageUrl: ''
-      }
+      phone: {},
+      melaList: []
     }
   },
   mounted () {},
@@ -237,15 +179,8 @@ export default {
             })
           })
           data[0].isSelect = true
-          // this.selectMonth = {
-          //   time: data[0].time,
-          //   week: data[0].lists
-          // }
-          // this.selectMonthStatus = 0
-          // this.weeklySelect({
-          //   time: this.selectMonth.time,
-          //   status: this.selectMonthStatus
-          // })
+          this.selectMonth = data[0]
+          this.getMeal(this.selectMonth)
           this.monthList = data
           // this.$router.push({path: '/home'})
         } else {
@@ -264,16 +199,39 @@ export default {
         monthItem.isSelect = false
       })
       item.isSelect = true
-      // this.selectMonth = item.time
-      this.selectMonth = {
-        time: item.time,
-        week: item.lists
-      }
-      // this.selectMonthStatus = 0
-      // this.weeklySelect(item)
+      this.selectMonth = item
+      this.isUpdata = false
+      this.getMeal(item)
+    },
+    // 卡片列表
+    getMeal (item) {
+      let obj = this.$qs.stringify({
+        time: item.time
+      })
+      this.$api.post('/admin/api/GetMeal', obj).then(res => {
+        if (res.data.code === 1) {
+          console.warn(res.data)
+          let list = res.data.lists
+          let data = []
+          list.forEach(item => {
+            data.push({
+              ...item,
+              imageUrl: item.photo === null ? '' : 'http://ep.zerom.cn' + item.photo
+            })
+          })
+          this.melaList = data
+          if (list.length === 0) {
+            this.$message.error('暂无菜单，请新增菜单或编辑')
+          }
+        } else {
+          console.warn(res.data.msg)
+          this.$message.error(res.data.msg)
+        }
+      })
     },
     handleAvatarSuccess (res, file) {
       this.phone.imageUrl = 'http://ep.zerom.cn' + res.data.path
+      this.phone.photo = res.data.path
       console.log(this.phone.imageUrl)
     },
     beforeAvatarUpload (file) {
@@ -289,11 +247,68 @@ export default {
       }
       return isJPG && isLt2M
     },
-    checkUpdata (type) {
+    checkUpdata (type, i) {
       this.isUpdata = !this.isUpdata
+      if (type === 'updata') {
+        this.phone = this.melaList[i]
+      }
       // if (type === 'add') {
       // } else {
       // }
+    },
+    savePhone () {
+      let obj = {
+        title: this.phone.title,
+        num: this.phone.num,
+        content: this.phone.content,
+        time: this.phone.time,
+        photo: this.phone.photo || '',
+        type: this.phone.type,
+        limit: this.phone.limit || 0
+      }
+      if (this.phone.id) {
+        obj.id = this.phone.id
+      }
+      this.$api.post('/admin/api/InsertSetMeal', this.$qs.stringify({...obj})).then(res => {
+        if (res.data.code === 1) {
+          console.log('保存成功')
+          this.$message({
+            showClose: true,
+            message: '保存成功',
+            type: 'success'
+          })
+        } else {
+          console.warn(res.data.msg)
+          this.$message.error(res.data.msg)
+        }
+      })
+    },
+    // 正则
+    isNumber () {
+      if (/^[0-9]*$/.test(Number(this.phone.limit))) {
+        console.log('111')
+      } else {
+        this.phone.limit = this.phone.limit.match(/\d+/g) || 0
+      }
+    },
+    // 新增卡片
+    addCard () {
+      var item = {
+        title: '',
+        num: 0,
+        content: '',
+        imageUrl: '',
+        photo: '',
+        type: '',
+        limit: 0,
+        time: this.selectMonth.time
+      }
+      this.melaList.unshift(item)
+      this.clickCard(item)
+    },
+    // 点击手机卡片编辑
+    clickCard (item) {
+      this.phone = item
     }
   }
 }
@@ -353,6 +368,7 @@ export default {
     overflow: hidden;
     padding-top: 1%;
     padding-right: 1%;
+    box-sizing: border-box;
   }
   .updataBox,
   .rightBox {
@@ -392,6 +408,7 @@ export default {
     box-sizing: border-box;
     color: #fff;
     border: 1px solid #663024;
+    cursor: pointer;
   }
   .bottomBtn {
     padding-top: 3%;
@@ -430,7 +447,7 @@ export default {
     padding: .03rem;
     position: relative;
   }
-  .cardContent .cardImg img{
+  .cardContent .cardImg .photo{
     height: 1rem;
     width: 1rem;
   }
@@ -541,12 +558,20 @@ export default {
     padding: .02rem .3rem;
     border-radius: .05rem;
     cursor: pointer;
+    display: flex;
   }
   .updataPhone .addTag img {
     height: 0.15rem;
   }
+  .updataPhone .addTag input {
+    background: none;
+    border: none;
+    outline: none;
+    width: .3rem;
+    height: 0.15rem;
+  }
   .bottomBtn {
-    padding: .2rem 0;
+    padding: .1rem 0;
     text-align: right;
   }
   .bottomBtn .el-button--warning {
