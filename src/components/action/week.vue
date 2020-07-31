@@ -57,7 +57,7 @@
       <div class="dialogBody">
         <el-upload
           class="upload-demo"
-          action="/admin/admin/api/insertall"
+          action="/admin/api/insertall"
           :on-preview="handlePreview"
           :on-remove="handleRemove"
           :before-remove="beforeRemove"
@@ -150,7 +150,7 @@ export default {
       let obj = this.$qs.stringify({
         date: date
       })
-      this.$api.post('/admin/api/weekly', obj).then(res => {
+      this.$api.post('/api/weekly', obj).then(res => {
         if (res.data.code === 1) {
           console.warn(res.data)
           let list = res.data.date
@@ -216,7 +216,7 @@ export default {
         time: item.time,
         status: item.status
       })
-      this.$api.post('/admin/api/WeeklySelect', obj).then(res => {
+      this.$api.post('/api/WeeklySelect', obj).then(res => {
         if (res.data.code === 1) {
           console.warn(res.data)
           let list = res.data.lists

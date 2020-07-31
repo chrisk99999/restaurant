@@ -40,7 +40,7 @@ export default {
         return
       }
       // 登录
-      this.$api.post('/admin/login/doLogin', {
+      this.$api.post('/login/doLogin', {
         username: this.username,
         password: this.passWord
       }).then(res => {
@@ -99,7 +99,7 @@ export default {
 }
 .loginView .loginPassWordtText .el-input__inner,
 .loginView .loginInputText .el-input__inner {
-  height: .4rem;
+  height: .39rem;
   border: none;
   color: #000;
   font-size: .1rem;

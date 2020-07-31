@@ -3,10 +3,19 @@
     <!-- 月报 -->
     <div class="left">
       <div>
+        <div class="btn">5月</div>
+      </div>
+      <div>
+        <div class="btn btnHover">6月</div>
+      </div>
+      <div>
         <div class="btn">7月</div>
       </div>
       <div>
-        <div class="btn btnHover">8月</div>
+        <div class="btn">7月</div>
+      </div>
+      <div>
+        <div class="btn">8月</div>
       </div>
       <div>
         <div class="btn">9月</div>
@@ -19,9 +28,6 @@
       </div>
       <div>
         <div class="btn">12月</div>
-      </div>
-      <div>
-        <div class="btn addBtn"><img src="@/assets/monthlyReport_01.png" alt=""></div>
       </div>
     </div>
     <div class="right">
@@ -102,8 +108,11 @@ export default {
     display: flex;
   }
   .left {
-    padding: 1rem;
+    margin: .28rem;
     width: 20%;
+    height: 80%;
+    box-sizing: border-box;
+    overflow: auto;
   }
   .left .btn {
     padding: .1rem .44rem;
@@ -118,7 +127,8 @@ export default {
   }
   .left .smallBtn {
     display: inline-block;
-    padding: .34rem .86rem;
+    padding: .11rem .29rem;
+    box-sizing: border-box;
   }
   .left .btnHover,
   .left .btn:hover {
@@ -138,64 +148,78 @@ export default {
   }
   .cardBox {
     display: flex;
+    text-align: center;
+    justify-content: center;
+    margin-bottom: .5rem;
   }
   .card {
-    width: 40%;
-    height: 15rem;
-    background: url(~@/assets/monthlyReport_02.png) no-repeat;
-    background-size: 100%;
-    margin-right: 4%;
+    width: 3.36rem;
+    /* flex: 1; */
+    background-size: 100% 100%;
+    /* margin-right: 4%;
     margin-top: 3%;
-    /* margin-bottom: 3%; */
+    margin-bottom: 3%; */
     box-sizing: border-box;
     color: #fff;
+    border: 1px solid #663024;
+    cursor: pointer;
+    background: url(~@/assets/monthlyReport_02.png) no-repeat;
+    background-size: 100% 100%;
+    margin-right: .3rem;
   }
   .card2 {
     background: url(~@/assets/monthlyReport_03.png) no-repeat;
-    background-size: 100%;
+    background-size: 100% 100%;
+    margin-right: .0rem;
   }
   .card3 {
     background: url(~@/assets/monthlyReport_04.png) no-repeat;
-    background-size: 100%;
+    background-size: 100% 100%;
+    margin-right: .3rem;
   }
   .card4 {
     background: url(~@/assets/monthlyReport_05.png) no-repeat;
-    background-size: 100%;
+    background-size: 100% 100%;
+    margin-right: .0rem;
   }
   .cardHead {
     text-align: right;
-    padding: .5rem 1rem;
+    padding: .07rem;
     padding-bottom: 0;
   }
   .cardHead img {
-    height: 1rem;
+    height: .15rem;
   }
   .cardTit {
-    font-size: 1.2rem;
+    font-size: .2rem;
     border-bottom: 1px solid #fff;
     width: fit-content;
     margin: 0 auto;
-    padding-top: 5%;
-    margin-bottom: 5%;
+    padding-top: .07rem;
+    padding-bottom: .17rem;
   }
   .cardText {
-    font-size: 1.2rem;
+    font-size: .18rem;
     width: fit-content;
     margin: 0 auto;
+    margin-top: .17rem;
+    margin-bottom: .3rem;
   }
   .rateBox {
-    padding-top: .6rem;
+    padding: .15rem 0;
   }
   .cardContent {
-    padding-top: 10%;
+    padding-top: .3rem;
+    padding-bottom: .5rem;
+    font-size: .13rem;
   }
   .cardContent img {
-    width: 2rem;
+    width: .37rem;
   }
   .cardContentSpan {
-    font-size: 1.5rem;
+    font-size: .27rem;
   }
   .cardContent .cardImg {
-    width: 1.2rem;
+    width: .26rem;
   }
 </style>

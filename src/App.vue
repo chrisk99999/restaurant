@@ -29,18 +29,24 @@ html, body {
   border-color: #000;
   font-size: .15rem !important;
 }
+.team .el-input__inner,
+.boutique .el-input__inner,
 .nutrition .el-input__inner,
 .week .el-input__inner {
   height: .35rem;
-  padding-left: .5rem;
+  padding-left: .5rem !important;
   background: #3c2a36;
 }
+.team .el-input__prefix,
+.boutique .el-input__prefix,
 .nutrition .el-input__prefix,
 .week .el-input__prefix {
   font-size: .15rem;
   top: 20%;
   left: 8%;
 }
+.team .el-input__suffix,
+.boutique .el-input__suffix,
 .nutrition .el-input__suffix,
 .week .el-input__suffix {
   right: 5%;
@@ -48,6 +54,8 @@ html, body {
   font-size: .15rem;
   top: 22%;
 }
+.team .updataPhone .el-input__inner,
+.boutique .updataPhone .el-input__inner,
 .nutrition .updataPhone .el-input__inner,
 .nutrition .updataPhone .el-input__inner {
   border-radius: 0;
@@ -56,30 +64,34 @@ html, body {
   border-color: #663024;
   background-color: #3c2a26;
 }
-.nutrition .updataPhone .el-textarea__inner  {
+.updataPhone .el-textarea__inner  {
   border-color: #663024;
   background-color: #3c2a26;
   color: #fff;
 }
-.nutrition .updataPhone .num .el-input__inner,
-.nutrition .updataPhone .num .el-input__inner {
+.updataPhone .num .el-input__inner,
+.updataPhone .num .el-input__inner {
   font-size: .05rem !important;
   color: #fff;
   height: .3rem;
 }
-.nutrition .updataPhone .el-input-group__append,
-.nutrition .updataPhone .el-input-group__prepend {
+.updataPhone .el-input-group__append,
+.updataPhone .el-input-group__prepend {
   background-color: #3c2a26;
   border-color: #663024;
 }
 .monthlyReport .el-select:hover .el-input__inner {
   background: none !important;
 }
+
+.el-rate__icon, .el-rate__item {
+  font-size: .2rem;
+}
 div::-webkit-scrollbar {
   /*滚动条整体样式*/
   width: 5px;  /*高宽分别对应横竖滚动条的尺寸*/
   height: 1px;
-  }
+}
 div::-webkit-scrollbar-thumb {
   /*滚动条里面小方块*/
   border-radius: 10px;
@@ -96,5 +108,8 @@ div::-webkit-scrollbar-track {
   border: 2px solid #aa8629;
   border-radius: .1rem;
   background: #3c2a26;
+}
+.team .el-textarea__inner {
+  /* border: none !important; */
 }
 </style>
