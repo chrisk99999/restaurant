@@ -41,7 +41,7 @@
       <div class="dialogBody">
         <el-upload
           class="upload-demo"
-          action="/admin/api/insertall"
+          action="/admin/admin/api/insertall"
           :on-preview="handlePreview"
           :on-remove="handleRemove"
           :before-remove="beforeRemove"
@@ -115,7 +115,7 @@ export default {
   methods: {
     // 加载右边tab
     getStaff (item) {
-      this.$api.post('/api/GetStaff', {}).then(res => {
+      this.$api.post('/admin/api/GetStaff', {}).then(res => {
         if (res.data.code === 1) {
           console.warn(res.data)
           let data = res.data.lists
@@ -169,7 +169,7 @@ export default {
       this.dialogVisible = false
     },
     downFile () {
-      window.location.href = 'http://ep.zerom.cn/api/excel'
+      window.location.href = 'http://ep.zerom.cn/admin/api/excel'
     }
   }
 }

@@ -90,7 +90,7 @@
           <el-input type="textarea" resize="none" v-model="phone.content" :rows="6" placeholder="请输入内容" style="font-size: .1rem;padding-top: .1rem;" ></el-input>
           <el-upload
             class="avatar-uploader"
-            action="/admin/api/webUploaderImages"
+            action="/admin/admin/api/webUploaderImages"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload">
@@ -167,7 +167,7 @@ export default {
       let obj = this.$qs.stringify({
         date: date
       })
-      this.$api.post('/api/weekly', obj).then(res => {
+      this.$api.post('/admin/api/weekly', obj).then(res => {
         if (res.data.code === 1) {
           console.warn(res.data)
           let list = res.data.date
@@ -208,7 +208,7 @@ export default {
       let obj = this.$qs.stringify({
         time: item.time
       })
-      this.$api.post('/api/GetMeal', obj).then(res => {
+      this.$api.post('/admin/api/GetMeal', obj).then(res => {
         if (res.data.code === 1) {
           console.warn(res.data)
           let list = res.data.lists
@@ -269,7 +269,7 @@ export default {
       if (this.phone.id) {
         obj.id = this.phone.id
       }
-      this.$api.post('/api/InsertSetMeal', this.$qs.stringify({...obj})).then(res => {
+      this.$api.post('/admin/api/InsertSetMeal', this.$qs.stringify({...obj})).then(res => {
         if (res.data.code === 1) {
           console.log('保存成功')
           this.$message({

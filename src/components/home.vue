@@ -1,6 +1,6 @@
 <template>
   <div class="view">
-    <heads></heads>
+    <heads @changeHead="linkAction"></heads>
     <div class="box">
       <div class="rowBox">
         <img src="@/assets/home_02.png" @click="linkAction(1, '每周菜谱')">
@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     linkAction (type, typeText) {
-      this.$router.push({path: '/action', query: {type: type, typeText: typeText}})
+      this.$router.push({path: '/action', query: {type: type}})
     }
   }
 }

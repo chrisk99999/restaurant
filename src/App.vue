@@ -112,4 +112,14 @@ div::-webkit-scrollbar-track {
 .team .el-textarea__inner {
   /* border: none !important; */
 }
+.score .el-input__inner {
+  font-size: inherit !important;
+}
+.score .headSelect1 .el-input__inner {
+  background: #3c2a26 !important;
+  color: #fbcd2b !important;
+  border-color: #663024;
+  padding: 0.13rem;
+  font-size: .12rem !important;
+}
 </style>

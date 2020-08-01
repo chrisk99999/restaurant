@@ -3,6 +3,14 @@
     <div class="left">
       <img @click="goHome" src="@/assets/head_01.png">
     </div>
+    <div class="bodyText">
+      <div :class="index === 1 ? 'tab tabHover' : 'tab'" @click="changeHead(1)">每周菜谱</div>
+      <div :class="index === 2 ? 'tab tabHover' : 'tab'" @click="changeHead(2)">营养加餐</div>
+      <div :class="index === 3 ? 'tab tabHover' : 'tab'" @click="changeHead(3)">餐厅月报</div>
+      <div :class="index === 4 ? 'tab tabHover' : 'tab'" @click="changeHead(4)">精品菜品</div>
+      <div :class="index === 5 ? 'tab tabHover' : 'tab'" @click="changeHead(5)">餐厅团队</div>
+      <div :class="index === 6 ? 'tab tabHover' : 'tab'" @click="changeHead(6)">员工团队</div>
+    </div>
     <div class="right">
       <span>{{rightText}}</span>
       <img @click="exit" src="@/assets/head_02.png" alt="">
@@ -17,6 +25,10 @@ export default {
     rightText: {
       type: String,
       default: ''
+    },
+    index: {
+      type: [String, Number],
+      default: 0
     }
   },
   components: {},
@@ -31,6 +43,9 @@ export default {
     },
     goHome () {
       this.$router.push({path: '/home'})
+    },
+    changeHead (type) {
+      this.$emit('changeHead', type)
     }
   }
 }
@@ -63,5 +78,22 @@ export default {
   .right img {
     height: .2rem;
     cursor: pointer;
+  }
+  .bodyText {
+    flex: 1;
+    color: #fff;
+    display: flex;
+    font-size: .12rem;
+  }
+  .tab {
+    margin-right: .2rem;
+    padding-bottom: .05rem;
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+  .tabHover,
+  .tab:hover {
+    border-bottom: 1px solid #fb882b;
+    color: #fb882b;
   }
 </style>

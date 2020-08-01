@@ -9,7 +9,7 @@
     <div class="right">
       <div class="updataBox">
         <div class="phoneView">
-          <div class="phone_head">餐厅团队</div>
+          <div class="phone_head">精品菜</div>
           <div class="cardList">
             <div class="card" v-for="(item, i) in boutiqueList" :key="i">
               <!-- <el-image class="photo" fit="cover" src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"> -->
@@ -58,7 +58,7 @@
         <div class="btnPhone">
           <el-upload
             class="avatar-uploader"
-            action="/admin/api/webUploaderImages"
+            action="/admin/admin/api/webUploaderImages"
             :show-file-list="false"
             :on-success="handleAvatarSuccessVideo"
             :before-upload="beforeAvatarUploadVideo">
@@ -70,7 +70,7 @@
           </el-upload>
           <el-upload
             class="avatar-uploader"
-            action="/admin/api/webUploaderImages"
+            action="/admin/admin/api/webUploaderImages"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload">
@@ -133,7 +133,7 @@ export default {
         time: this.selectBoutique.time
       }
       let obj = this.$qs.stringify(saveObj)
-      this.$api.post('/api/InsertFine', obj).then(res => {
+      this.$api.post('/admin/api/InsertFine', obj).then(res => {
         if (res.data.code === 1) {
           // this.$router.push({path: '/home'})
           this.$message({
@@ -154,7 +154,7 @@ export default {
         saveObj.time = action.time
       }
       let obj = this.$qs.stringify(saveObj)
-      this.$api.post('/api/GetFine', obj).then(res => {
+      this.$api.post('/admin/api/GetFine', obj).then(res => {
         if (res.data.code === 1) {
           console.warn(res.data)
           let btnArr = []
@@ -237,7 +237,7 @@ export default {
         id: item.id
       }
       let obj = this.$qs.stringify(saveObj)
-      this.$api.post('/api/delFine', obj).then(res => {
+      this.$api.post('/admin/api/delFine', obj).then(res => {
         if (res.data.code === 1) {
           // this.$router.push({path: '/home'})
           this.$message({

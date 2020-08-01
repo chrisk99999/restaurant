@@ -1,6 +1,6 @@
 <template>
   <div class="view">
-    <heads :rightText="typeText"></heads>
+    <heads :rightText="typeText" :index="type" @changeHead="changeHead"></heads>
     <div class="box">
       <week v-if="type === '1' || type === 1"></week>
       <nutrition v-else-if="type === '2' || type === 2"></nutrition>
@@ -41,6 +41,11 @@ export default {
   mounted () {
     this.typeText = this.$route.query.typeText
     this.type = this.$route.query.type
+  },
+  methods: {
+    changeHead (type) {
+      this.type = type
+    }
   }
 }
 </script>

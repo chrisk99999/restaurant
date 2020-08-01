@@ -40,7 +40,7 @@ export default {
         return
       }
       // 登录
-      this.$api.post('/login/doLogin', {
+      this.$api.post('/admin/login/doLogin', {
         username: this.username,
         password: this.passWord
       }).then(res => {

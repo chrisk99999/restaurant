@@ -57,7 +57,7 @@
         <div class="btnPhone">
           <el-upload
             class="avatar-uploader"
-            action="/admin/api/webUploaderImages"
+            action="/admin/admin/api/webUploaderImages"
             :show-file-list="false"
             :on-success="handleAvatarSuccessVideo"
             :before-upload="beforeAvatarUploadVideo">
@@ -69,7 +69,7 @@
           </el-upload>
           <el-upload
             class="avatar-uploader"
-            action="/admin/api/webUploaderImages"
+            action="/admin/admin/api/webUploaderImages"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload">
@@ -137,7 +137,7 @@ export default {
         video: this.phone.video
       }
       let obj = this.$qs.stringify(saveObj)
-      this.$api.post('/api/InsertTeam', obj).then(res => {
+      this.$api.post('/admin/api/InsertTeam', obj).then(res => {
         if (res.data.code === 1) {
           // this.$router.push({path: '/home'})
           this.$message({
@@ -153,7 +153,7 @@ export default {
       })
     },
     getTeam () {
-      this.$api.post('/api/GetTeam', {}).then(res => {
+      this.$api.post('/admin/api/GetTeam', {}).then(res => {
         if (res.data.code === 1) {
           console.warn(res.data)
           let list = res.data.lists

@@ -3,28 +3,33 @@
     <!-- 评分 -->
     <div class="left">
       <div>
-        <div class="btn">营养餐评分</div>
+        <div :class="selectIndex === 0 ? 'btn btnHover' : 'btn'" @click="getEvaluate">营养餐评分</div>
       </div>
       <div>
-        <div class="btn">固定菜品评价</div>
+        <div :class="selectIndex === 1 ? 'btn btnHover' : 'btn'" @click="getSetmeal">固定菜品评价</div>
+        <div v-if="selectIndex === 1" style="display: flex;flex-flow: row nowrap;justify-content: space-between;">
+          <div :class="smIndex === 0 ? 'btn smallBtn btnHover' : 'btn smallBtn'" @click="smIndex = 0">查看</div>
+          <div :class="smIndex === 1 ? 'btn smallBtn btnHover' : 'btn smallBtn'" @click="getNowWeekly">编辑</div>
+        </div>
       </div>
       <div>
-        <div class="btn">餐厅评价</div>
+        <div :class="selectIndex === 2 ? 'btn btnHover' : 'btn'" @click="getRestaurant">餐厅评价</div>
       </div>
     </div>
-    <div v-if="isReta" class="right">
+    <div v-if="selectIndex === 0" class="right">
       <div class="rightList">
         <div class="listHead">
           <div class="headSelect">
-            <el-select v-model="month" style="width: 10rem;margin-right: 1rem;" placeholder="请选择">
+            <el-select v-model="month" style="width: 1rem;margin-right: .1rem;" @change="fliterMonth" placeholder="请选择">
               <el-option
-                v-for="item in monthList"
+                v-for="(item) in monthList"
                 :key="item.value"
                 :label="item.label"
-                :value="item.value">
+                :value="item.value"
+                >
               </el-option>
             </el-select>
-            <el-select v-model="week" style="width: 10rem;" placeholder="请选择">
+            <el-select v-model="week" style="width: 1rem;" placeholder="请选择">
               <el-option
                 v-for="item in weekList"
                 :key="item.value"
@@ -35,70 +40,39 @@
           </div>
           <div class="headNum">
             <div class="num">
-              <img src="@/assets/score_01.png" style="position: absolute;left: -0.6rem;top: 0;width: 2.3rem;" alt="">
+              <img src="@/assets/score_01.png" style="position: absolute;left: -0.05rem;top: 0;width: .2rem;" alt="">
               1588
             </div>
             <div class="num">
-              <img src="@/assets/score_02.png" style="position: absolute;left: -0.6rem;top: 0;width: 2.3rem;" alt="">
+              <img src="@/assets/score_02.png" style="position: absolute;left: -0.05rem;top: 0;width: .2rem;" alt="">
               25
             </div>
           </div>
         </div>
-        <div class="li">
+        <div class="li" v-for="(item,i) in dataList " :key ='i'>
           <div class="userInfo">
             姓名 <span>Frank</span>
             工号 <span>NO.100532</span>
             已选 <span>套餐A</span>
           </div>
           <div class="content">
-            测试文本测试文本测试文本，测试文本测试文本测试文本，测试文本，测试文本测试文本测试文本，测试文本测试文本测试文本，测试文本
+            {{item.content}}
           </div>
           <div class="time">
             <div style="text-align: right;">
-              <img src="@/assets/score_01.png" style="width: 2rem;" alt="">
-            </div>
-            <p style="color: #aaa;margin-top: 0;">2020.07.27 11:25:53</p>
-          </div>
-        </div>
-        <div class="li">
-          <div class="userInfo">
-            姓名 <span>Frank</span>
-            工号 <span>NO.100532</span>
-            已选 <span>套餐A</span>
-          </div>
-          <div class="content">
-            测试文本测试文本测试文本，测试文本测试文本测试文本，测试文本，测试文本测试文本测试文本，测试文本测试文本测试文本，测试文本
-          </div>
-          <div class="time">
-            <div style="text-align: right;">
-              <img src="@/assets/score_02.png" style="width: 2rem;" alt="">
-            </div>
-            <p style="color: #aaa;margin-top: 0;">2020.07.27 11:25:53</p>
-          </div>
-        </div>
-        <div class="li">
-          <div class="userInfo">
-            姓名 <span>Frank</span>
-            工号 <span>NO.100532</span>
-            已选 <span>套餐A</span>
-          </div>
-          <div class="content">
-            测试文本测试文本测试文本，测试文本测试文本测试文本，测试文本，测试文本测试文本测试文本，测试文本测试文本测试文本，测试文本
-          </div>
-          <div class="time">
-            <div style="text-align: right;">
-              <img src="@/assets/score_01.png" style="width: 2rem;" alt="">
+              <img v-if="item.like" src="@/assets/score_01.png" style="width: .2rem;" alt="">
+              <img v-else src="@/assets/score_02.png" style="width: .2rem;" alt="">
             </div>
             <p style="color: #aaa;margin-top: 0;">2020.07.27 11:25:53</p>
           </div>
         </div>
       </div>
     </div>
-    <div v-else class="right">
+    <div v-if="selectIndex === 1 && smIndex === 0" class="right">
       <div class="rightList">
         <div class="listHead">
           <div class="headSelect">
-            <el-select v-model="month" style="width: 10rem;margin-right: 1rem;" placeholder="请选择">
+            <el-select v-model="month" style="width: 1rem;margin-right: .1rem;" placeholder="请选择">
               <el-option
                 v-for="item in monthList"
                 :key="item.value"
@@ -106,7 +80,128 @@
                 :value="item.value">
               </el-option>
             </el-select>
-            <el-select v-model="week" style="width: 10rem;" placeholder="请选择">
+            <el-select v-model="week" style="width: 1rem;" placeholder="请选择">
+              <el-option
+                v-for="item in weekList"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </div>
+          <div class="headNum">
+            <div class="num">
+              <img src="@/assets/score_01.png" style="position: absolute;left: -0.05rem;top: 0;width: .2rem;" alt="">
+              1588
+            </div>
+            <div class="num">
+              <img src="@/assets/score_02.png" style="position: absolute;left: -0.05rem;top: 0;width: .2rem;" alt="">
+              25
+            </div>
+          </div>
+        </div>
+        <div class="li" v-for="(item, i) in setmealList" :key="i">
+          <div class="userInfo">
+            姓名 <span>Frank</span>
+            工号 <span>NO.100532</span>
+            已选 <span>套餐A</span>
+          </div>
+          <div class="content">
+            {{item.content === null ? '暂无评价' : item.content}}
+          </div>
+          <div class="time">
+            <div style="text-align: right;">
+              <img v-if="item.like" src="@/assets/score_01.png" style="width: .2rem;" alt="">
+              <img v-else src="@/assets/score_02.png" style="width: .2rem;" alt="">
+            </div>
+            <p style="color: #aaa;margin-top: 0;">2020.07.27 11:25:53</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-if="selectIndex === 1 && smIndex === 1" class="right">
+      <div class="updataBox">
+        <div class="phoneView">
+          <!-- <div class="phone_head">精品菜</div> -->
+          <!-- <el-input v-model="phone.title" placeholder="请输入标题"></el-input> -->
+          <el-select v-model="month" class="headSelect1" style="width: 1.5rem;margin: 0 auto;margin-top: .3rem;background: #51352b;" placeholder="请选择">
+            <el-option
+              v-for="item in monthList"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+          <div class="tags-bar">
+            <div class="tag"><p class="t">周一</p></div>
+            <div class="tag"><p class="t">早餐</p></div>
+            <div class="tag"><p class="t">套餐</p></div>
+          </div>
+          <div class="cardList" v-if="nowWeeklyList.length > 0">
+            <div class="card">
+              <div class="cardTextBox">
+                <div class="cardTit">
+                  <!-- {{item.title}} -->
+                  套餐
+                </div>
+              </div>
+              <div class="box-bottom">
+              <el-image class="photo" fit="cover" src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png">
+              <!-- <el-image class="photo" fit="cover" :src="item.imageUrl">
+                <div slot="error" style="width: 1rem;height: 1rem;box-sizing: border-box;border: 1px solid #663024;" class="image-slot">
+                  <i style="font-size: .3rem;margin-top: 0.35rem;" class="el-icon-picture-outline"></i>
+                </div> -->
+              </el-image>
+                <div class="bot-con">
+                    <p>红烧牛肉</p>
+                    <p>红烧牛肉</p>
+                    <p>红烧牛肉</p>
+                    <p>红烧牛肉</p>
+                </div>
+              </div>
+              <img class="delIcon" src="@/assets/nutrition_04.png" alt="">
+            </div>
+            <!-- <div class="addCard">
+              <img src="@/assets/nutrition_03.png" alt="">
+            </div> -->
+          </div>
+        </div>
+        <div class="updataPhone">
+          <div class="phoneContent">
+            <div class="updataCard" v-if="nowWeeklyList.length">
+              <div class="updataCardText">
+                <div class="updataCardHead">
+                  <div class="tag">周一</div>
+                  <div class="tag">早餐</div>
+                </div>
+                <div class="updataCardText_name">
+                  套餐A
+                </div>
+              </div>
+              <div class="uploadBox">
+                <img src="@/assets/nutrition_03.png" alt="">
+              </div>
+            </div>
+          </div>
+          <div class="bottomBtn">
+            <el-button type="warning" v-if="nowWeeklyList.length" round>保存</el-button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-if="selectIndex === 2" class="right">
+      <div class="rightList">
+        <div class="listHead">
+          <div class="headSelect">
+            <el-select v-model="month" style="width: 1rem;margin-right: .1rem;" placeholder="请选择">
+              <el-option
+                v-for="item in monthList"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+            <el-select v-model="week" style="width: 1rem;" placeholder="请选择">
               <el-option
                 v-for="item in weekList"
                 :key="item.value"
@@ -124,14 +219,14 @@
             </el-rate>
           </div>
         </div>
-        <div class="li">
-          <div class="userInfo">
+        <div class="li" v-for="(item, i) in getRestaurantList" :key="i">
+          <div class="userInfo" >
             姓名 <span>Frank</span>
             工号 <span>NO.100532</span>
             已选 <span>套餐A</span>
           </div>
           <div class="content">
-            测试文本测试文本测试文本，测试文本测试文本测试文本，测试文本，测试文本测试文本测试文本，测试文本测试文本测试文本，测试文本
+            {{item.content}}
           </div>
           <div class="time">
             <div style="text-align: right;">
@@ -141,48 +236,6 @@
                 show-score
                 text-color="#ff9900">
               </el-rate>
-            </div>
-            <p style="color: #aaa;">2020.07.27 11:25:53</p>
-          </div>
-        </div>
-        <div class="li">
-          <div class="userInfo">
-            姓名 <span>Frank</span>
-            工号 <span>NO.100532</span>
-            已选 <span>套餐A</span>
-          </div>
-          <div class="content">
-            测试文本测试文本测试文本，测试文本测试文本测试文本，测试文本，测试文本测试文本测试文本，测试文本测试文本测试文本，测试文本
-          </div>
-          <div class="time">
-            <div style="text-align: right;">
-            <el-rate
-              v-model="rate"
-              disabled
-              show-score
-              text-color="#ff9900">
-            </el-rate>
-            </div>
-            <p style="color: #aaa;">2020.07.27 11:25:53</p>
-          </div>
-        </div>
-        <div class="li">
-          <div class="userInfo">
-            姓名 <span>Frank</span>
-            工号 <span>NO.100532</span>
-            已选 <span>套餐A</span>
-          </div>
-          <div class="content">
-            测试文本测试文本测试文本，测试文本测试文本测试文本，测试文本，测试文本测试文本测试文本，测试文本测试文本测试文本，测试文本
-          </div>
-          <div class="time">
-            <div style="text-align: right;">
-            <el-rate
-              v-model="rate"
-              disabled
-              show-score
-              text-color="#ff9900">
-            </el-rate>
             </div>
             <p style="color: #aaa;">2020.07.27 11:25:53</p>
           </div>
@@ -221,6 +274,7 @@ export default {
         }
       ],
       week: '',
+      dataList: [],
       weekList: [
         {
           label: '第1周',
@@ -236,12 +290,171 @@ export default {
           value: '4'
         }
       ],
-      isReta: true,
-      rate: 4
+      isReta: false,
+      rate: 4,
+      selectIndex: 0,
+      smIndex: 0,
+      setmealList: [],
+      getRestaurantList: [],
+      boutiqueList: [],
+      phone: {},
+      nowWeeklyList: []
     }
   },
-  mounted () {},
+  mounted () {
+    this.getEvaluate()
+  },
   methods: {
+    fliterMonth () {
+      console.log(1)
+      console.log(this.month)
+      let i = this.mon.indexOf(this.month)
+      console.log(i)
+      let time = this.monthTime[i]
+      console.log(time)
+      this.$api.post('/admin/api/GetEvaluate', {time}).then(res => {
+        console.log(res)
+        this.dataList = res.data.lists
+      })
+    },
+    getEvaluate () {
+      this.selectIndex = 0
+      this.$api.post('/admin/api/GetEvaluate').then(res => {
+        console.log(res)
+        let resDate = res.data.date
+        let data = []
+        let mont = []
+        res.data.lists.forEach(item => {
+          data.push({
+            ...item
+          })
+        })
+        this.dataList = data
+        resDate.forEach(item => {
+          if (mont.length === 0) {
+            mont.push({
+              value: item.time,
+              label: item.date + '月'
+            })
+          } else {
+            // mont.forEach(dateItem => {
+            //   console.warn(dateItem, item)
+            //   if () {}
+            // })
+            for (var i = 0; i < mont.length; i++) {
+              let montItem = mont[i]
+              console.warn(mont, item)
+              if (montItem.value !== item.time && i === mont.length - 1) {
+                mont.push({
+                  value: item.time,
+                  label: item.date + '月'
+                })
+                break
+              }
+            }
+          }
+        })
+        this.monthList = mont
+      })
+    },
+    getSetmeal () {
+      this.selectIndex = 1
+      this.$api.post('/admin/api/GetSetmeal', {}).then(res => {
+        console.log(res)
+        let resDate = res.data.date
+        let data = []
+        let mont = []
+        res.data.lists.forEach(item => {
+          data.push({
+            ...item
+          })
+        })
+        this.setmealList = data
+        resDate.forEach(item => {
+          if (mont.length === 0) {
+            mont.push({
+              value: item.time,
+              label: item.date + '月'
+            })
+          } else {
+            // mont.forEach(dateItem => {
+            //   console.warn(dateItem, item)
+            //   if () {}
+            // })
+            for (var i = 0; i < mont.length; i++) {
+              let montItem = mont[i]
+              console.warn(mont, item)
+              if (montItem.value !== item.time && i === mont.length - 1) {
+                mont.push({
+                  value: item.time,
+                  label: item.date + '月'
+                })
+                break
+              }
+            }
+          }
+        })
+        this.monthList = mont
+      })
+    },
+    getRestaurant () {
+      this.selectIndex = 2
+      this.$api.post('/admin/api/GetRestaurant', {}).then(res => {
+        console.log(res)
+        let resDate = res.data.date
+        let data = []
+        let mont = []
+        res.data.lists.forEach(item => {
+          data.push({
+            ...item
+          })
+        })
+        this.getRestaurantList = data
+        resDate.forEach(item => {
+          if (mont.length === 0) {
+            mont.push({
+              value: item.time,
+              label: item.date + '月'
+            })
+          } else {
+            // mont.forEach(dateItem => {
+            //   console.warn(dateItem, item)
+            //   if () {}
+            // })
+            for (var i = 0; i < mont.length; i++) {
+              let montItem = mont[i]
+              console.warn(mont, item)
+              if (montItem.value !== item.time && i === mont.length - 1) {
+                mont.push({
+                  value: item.time,
+                  label: item.date + '月'
+                })
+                break
+              }
+            }
+          }
+        })
+        this.monthList = mont
+      })
+    },
+    getNowWeekly () {
+      this.smIndex = 1
+      let saveObj = {
+        time: 1593532800
+      }
+      let obj = this.$qs.stringify(saveObj)
+      this.$api.post('/admin/api/getNowWeekly', obj).then(res => {
+        if (res.data.code === 1) {
+          console.log(res)
+        }
+      })
+    },
+    changeTime () {
+      // if () {
+      // }
+    }
+    // fliterWeek(){
+    // }
   }
 }
 </script>
@@ -253,8 +466,11 @@ export default {
     display: flex;
   }
   .left {
-    padding: 1rem;
+    margin: .28rem;
     width: 20%;
+    height: 80%;
+    box-sizing: border-box;
+    overflow: auto;
   }
   .left .btn {
     padding: .1rem .44rem;
@@ -269,7 +485,8 @@ export default {
   }
   .left .smallBtn {
     display: inline-block;
-    padding: .34rem .86rem;
+    padding: .11rem .29rem;
+    box-sizing: border-box;
   }
   .left .btnHover,
   .left .btn:hover {
@@ -279,7 +496,7 @@ export default {
   }
   .right {
     flex: 1;
-    padding: 1rem;
+    padding-top: 3%;
     box-sizing: border-box;
   }
   .rightList {
@@ -288,7 +505,7 @@ export default {
     border-radius: 20px;
     background: #3c2a26;
     box-sizing: border-box;
-    padding: 1rem;
+    padding: .1rem;
   }
   .listHead {
     text-align: left;
@@ -299,10 +516,10 @@ export default {
   }
   .headNum .num{
     background: #fff;
-    padding: .5rem 1.5rem;
+    padding: .05rem .15rem;
     display: inline-block;
     border-radius: 50px;
-    margin-right: .5rem;
+    margin-right: .05rem;
     position: relative;
     min-width: 40px;
     text-align: right;
@@ -310,14 +527,14 @@ export default {
   .li {
     display: flex;
     color: #fff;
-    font-size: .8rem;
+    font-size: .08rem;
     text-align: left;
-    padding: .5rem 1rem;
-    margin: .5rem 0;
+    padding: .05rem .1rem;
+    margin: .05rem 0;
     border: 1px solid #663024;
   }
   .userInfo {
-    width: 11rem;
+    width: 1.1rem;
   }
   .userInfo span {
     color: #fb882b;
@@ -331,5 +548,206 @@ export default {
   }
   .time p {
     margin-bottom: 0;
+  }
+  .updataBox{
+    border: 1px solid #c29b29;
+    border-radius: 10px;
+    background: #3c2a26;
+    box-sizing: border-box;
+    overflow: hidden;
+    width: 100%;
+     height: 98%;
+    display: flex;
+    padding: 0;
+    border-radius: .2rem;
+  }
+  .updataBox .phoneView {
+    width: 2.6rem;
+    border: 1px solid #fbcd2b;
+    border-radius: .2rem;
+    height: 100%;
+    box-sizing: border-box;
+    background: #51352b;
+    overflow: auto;
+    text-align: left;
+    display: flex;
+    flex-flow: column;
+  }
+  .updataBox .phoneView .phone_head {
+    color: #fbcd2b;
+    font-size: .14rem;
+    padding: .14rem 0;
+    padding-bottom: .05rem;
+    text-align: center;
+    width: fit-content;
+    margin: 0 auto;
+    border-bottom: .02rem solid #fbcd2b;
+  }
+  .tags-bar{
+    width: 100%;
+    padding: .15rem;
+    box-sizing: border-box;
+    display: flex;
+    font-size: .1rem;
+    color: #fbcd2b;
+  }
+  .tag{
+    /* width: .5rem; */
+    border: 2px solid #663024;
+    /* padding-left: .1rem; */
+    padding: .05rem;
+    margin-right: .1rem;
+    background: #3C2A26;
+  }
+  .tag .t{
+    padding: 0;
+    padding-left: .1rem;
+    margin: 0;
+    /* height: 40%; */
+    border-left: 4px solid #fbcd2b;
+  }
+  .updataPhone {
+    flex: 1;
+    box-sizing: border-box;
+    padding: .15rem .3rem;
+    text-align: left;
+    display: flex;
+    flex-flow: column;
+  }
+  .phoneContent {
+    margin-top: .1rem;
+    box-sizing: border-box;
+    color: #fff;
+    font-size: .1rem;
+    overflow: auto;
+    height: 80%;
+  }
+  .phoneContent_img {
+    width: 100%;
+    height: 1.7rem;
+    border-radius: .1rem;
+    margin: .1rem 0;
+  }
+  .cardList {
+    padding: .06rem .13rem;
+    overflow: auto;
+  }
+  .card .photo {
+    width: 1.14rem;
+    height: .7rem;
+
+  }
+  .box-bottom{
+    display: flex;
+    /* max-height: .76rem; */
+    padding: .1rem;
+    box-sizing: border-box;
+  }
+  .box-bottom p{
+    padding: 0;
+    margin: 0.05rem;
+  }
+  .card {
+    width: 2.3rem;
+    text-align: left;
+    color: #fff;
+    /* border-radius: .1rem; */
+    display: inline-block;
+    margin-right: 4%;
+    margin-bottom: .1rem;
+    position: relative;
+    border: 0.005208rem solid #663024;
+    background: #3c2a26;
+    /* border-top-right-radius: .07rem; */
+
+  }
+  .card .delIcon {
+    height: .14rem;
+    width: .14rem;
+    position: absolute;
+    top: -0.07rem;
+    right: -0.07rem;
+  }
+  .card .cardTextBox {
+    background: #3c2a26;
+    padding: .05rem;
+    border-bottom: 1px solid #4d322b;
+  }
+  .card .cardTit {
+    font-size: .1rem;
+    color: #dc6841;
+    /* padding: .07rem 0; */
+  }
+  .phoneView .addCard {
+    padding: .3rem .37rem;;
+    background: #3c2a26;
+    width: max-content;
+    cursor: pointer;
+  }
+  .updataBox .phoneView .addCard img {
+    height: .3rem;
+  }
+  .btnPhone {
+    padding: .15rem .2rem 0 0 ;
+    position: relative;
+  }
+  .btnBox {
+    padding: .15rem;
+    border: 1px solid #663024;
+    position: relative;
+    margin-bottom: .2rem;
+  }
+  .btnBox .addIcon {
+    position: absolute;
+    height: .14rem;
+    width: .14rem;
+    top: -0.07rem;
+    right: -0.07rem;
+  }
+  .bottomBtn {
+    position: absolute;
+    bottom: .3rem;
+    right: .2rem;
+  }
+  .bottomBtn .el-button {
+    padding: .06rem .2rem;
+    border-radius: 5rem;
+  }
+  .bottomBtn .el-button--warning {
+    color: #333;
+  }
+  .updataCard {
+    display: flex;
+    border: 0.010417rem solid #663024;
+    padding: .1rem .15rem;
+  }
+  .updataCardText {
+    display: flex;
+    flex-flow: column;
+    width: 60%;
+  }
+  .updataCardText_name {
+    border: 0.010417rem solid #663024;
+    padding: .05rem;
+    background: #3C2A26;
+    margin-top: .1rem;
+    height: .4rem;
+  }
+  .updataCard .updataCardHead {
+    display: flex;
+  }
+  .updataCard .updataCardHead .tag {
+    flex: 1;
+  }
+  .updataCard .updataCardHead .tag:last-child {
+    margin-right: 0;
+  }
+  .uploadBox {
+    padding: .26rem;
+    border: 0.010417rem solid #663024;
+    margin-left: .2rem;
+  }
+  .uploadBox img{
+    width: .3rem;
   }
 </style>
