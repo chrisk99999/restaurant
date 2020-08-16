@@ -8,6 +8,9 @@
       <div>
         <div class="btn" @click="downFile"><img src="@/assets/staff_02.png" alt=""></div>
       </div>
+      <div>
+        <div class="btn" @click="isAdd = true"><img src="@/assets/staff_03.png" alt=""></div>
+      </div>
     </div>
     <div class="right">
       <div class="rightTab">
@@ -19,12 +22,34 @@
         </div>
         <div class="tabBodyBox">
           <div class="tabBody" v-for="(item, i) in tableData" :key="i">
-            <div class="tab">{{item.name}}</div>
-            <div class="tab">{{item.tel}}</div>
-            <div class="tab">{{item.group_name}}</div>
-            <div class="tab">{{item.tem}}</div>
-            <div class="tab">{{item.status === 1 ? '已激活' : '未激活'}}</div>
-            <div class="tab updata">编辑</div>
+            <div class="tab">
+              <el-input v-if="item.isUpdata" v-model="item.name" placeholder="请输入内容"></el-input>
+              <span v-else>{{item.name}}</span>
+            </div>
+            <div class="tab">
+              <el-input v-if="item.isUpdata" @change="isNumber('updata', 'tel', i)" v-model="item.tel" placeholder="请输入内容"></el-input>
+              <span v-else>{{item.tel}}</span>
+            </div>
+            <div class="tab">
+              <!-- {{item.group_name}} -->
+              <el-select filterable v-if="item.isUpdata" v-model="item.cate_id" placeholder="请选择">
+                <el-option
+                  v-for="group in groupList"
+                  :key="group.value"
+                  :label="group.label"
+                  :value="group.value">
+                </el-option>
+              </el-select>
+              <span v-else>{{item.group_name}}</span>
+            </div>
+            <div class="tab">
+              <el-input v-if="item.isUpdata" @change="isNumber('updata', 'tem', i)" v-model="item.tem" placeholder="请输入内容"></el-input>
+              <span v-else>{{item.tem}}</span>
+            </div>
+            <div class="tab">
+              <span>{{item.status === 1 ? '已激活' : '未激活'}}</span>
+            </div>
+            <div class="tab updata" @click="updataTab(item)">{{item.isUpdata ? '保存' : '编辑'}}</div>
           </div>
         </div>
       </div>
@@ -41,7 +66,7 @@
       <div class="dialogBody">
         <el-upload
           class="upload-demo"
-          action="/admin/admin/api/insertall"
+          action="/admin/api/insertall"
           :on-preview="handlePreview"
           :on-remove="handleRemove"
           :before-remove="beforeRemove"
@@ -55,10 +80,51 @@
             文件：<el-button size="mini" type="warning">点击上传</el-button> *仅限xls与xlsx文件类型上传
         </el-upload>
       </div>
-      <!-- <span slot="footer" class="dialog-footer">
-        <el-button type="warning" @click="saveFile" style="margin-right: 5%;" round>保存</el-button>
-        <el-button type="success" @click="dialogVisible = false" round>取消</el-button>
-      </span> -->
+    </el-dialog>
+    <el-dialog
+      title="提示"
+      :visible.sync="isAdd"
+      width="40%"
+      custom-class="dialog"
+      :before-close="handleClose"
+      top="15%"
+      center>
+      <div slot="title" style="text-align: center;font-size: .15rem;color: #fbcd2b;">请输入新增员工资料</div>
+      <!-- <span>这是一段信息</span> -->
+      <div class="addDialogBody dialogBody">
+        <el-input
+          placeholder="请输入姓名"
+          v-model="add.name">
+          <div slot="prefix" style="padding: .03rem .05rem;font-size: .1rem;color: #fb882b;">姓名：</div>
+        </el-input>
+        <el-input
+          style="margin-top: .1rem;"
+          placeholder="请输入工号"
+          v-model="add.tem"
+          @change="isNumber('add', 'tem')">
+          <div slot="prefix" style="padding: .03rem .05rem;font-size: .1rem;color: #fb882b;">工号：</div>
+        </el-input>
+        <el-input
+          style="margin-top: .1rem;"
+          placeholder="请输入电话"
+          v-model="add.tel"
+          @change="isNumber('add', 'tel')">
+          <div slot="prefix" style="padding: .03rem .05rem;font-size: .1rem;color: #fb882b;">电话：</div>
+        </el-input>
+        <el-select filterable v-model="add.cate_id" placeholder="请选择部门" style="margin-top: .1rem;">
+          <div slot="prefix" style="padding: .03rem .05rem;font-size: .1rem;color: #fb882b;">部门：</div>
+          <el-option
+            v-for="group in groupList"
+            :key="group.value"
+            :label="group.label"
+            :value="group.value">
+          </el-option>
+        </el-select>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="warning" @click="save(add)" style="margin-right: 10%;" round>保存</el-button>
+        <el-button type="success" @click="isAdd = false" round>取消</el-button>
+      </span>
     </el-dialog>
   </div>
 </template>
@@ -106,11 +172,20 @@ export default {
         }
       ],
       dialogVisible: false,
-      fileList: []
+      isAdd: false,
+      fileList: [],
+      groupList: [],
+      add: {
+        name: '',
+        tel: '',
+        cate_id: '',
+        tem: ''
+      }
     }
   },
   mounted () {
     this.getStaff()
+    this.getGroup()
   },
   methods: {
     // 加载右边tab
@@ -121,7 +196,11 @@ export default {
           let data = res.data.lists
           let list = []
           data.forEach((item, i) => {
-            list.push(item)
+            list.push({
+              ...item,
+
+              isUpdata: false
+            })
           })
           if (data.length === 0) {
             this.$message.error('暂员工信息，请上传员工信息')
@@ -170,6 +249,88 @@ export default {
     },
     downFile () {
       window.location.href = 'http://ep.zerom.cn/admin/api/excel'
+    },
+    updataTab (item) {
+      item.isUpdata = !item.isUpdata
+      if (!item.isUpdata) {
+        this.save(item)
+      }
+    },
+    getGroup () {
+      this.$api.post('/index/api/getGroup', {}).then(res => {
+        if (res.data.code === 1) {
+          // console.warn(res.data)
+          let list = []
+          res.data.lists.forEach(item => {
+            list.push({
+              ...item,
+              value: item.id,
+              label: item.group_name
+            })
+          })
+          this.groupList = list
+          // this.$router.push({path: '/home'})
+        } else {
+          console.warn(res.data.msg)
+          this.$message.error(res.data.msg)
+        }
+      })
+    },
+    changeGroup (item) {
+      console.log(item)
+    },
+    save (item, type) {
+      let saveObj = {
+        name: item.name,
+        tel: item.tel,
+        cate_id: item.cate_id,
+        tem: item.tem
+      }
+      if (item.id) {
+        saveObj.id = item.id
+      }
+      if (saveObj.name === '') {
+        this.$message.error('姓名')
+        return
+      } else if (saveObj.tel === '' && saveObj.tel.length === 11) {
+        this.$message.error('电话')
+        return
+      } else if (saveObj.cate_id === '') {
+        this.$message.error('请选择部门')
+        return
+      } else if (saveObj.tem === '') {
+        this.$message.error('请输入工号')
+        return
+      }
+      let obj = this.$qs.stringify(saveObj)
+      this.$api.post('/admin/api/InsertStaff', obj).then(res => {
+        if (res.data.code === 1) {
+          // this.$router.push({path: '/home'})
+          this.$message({
+            showClose: true,
+            message: '保存成功',
+            type: 'success'
+          })
+          this.isAdd = false
+          this.getStaff()
+        } else {
+          console.warn(res.data.msg)
+          this.$message.error(res.data.msg)
+        }
+      })
+    },
+    // 正则
+    isNumber (type, key, index) {
+      if (type === 'add') {
+        console.log(/^[0-9]*$/.test(this.add[key]))
+        if (!(/^[0-9]*$/.test(Number(this.add[key])))) {
+          this.add[key] = this.add[key].replace(/[^1-9]/g, '') || 0
+        }
+      } else {
+        if (!(/^[0-9]*$/.test(Number(this.tableData[index][key])))) {
+          this.tableData[index][key] = this.tableData[index][key].replace(/[^1-9]/g, '') || 0
+        }
+      }
     }
   }
 }
@@ -215,12 +376,13 @@ export default {
     box-sizing: border-box;
   }
   .rightTab {
-    height: 100%;
+    height: 90%;
     border: 2px solid #aa8629;
     border-radius: 20px;
     background: #3c2a26;
     box-sizing: border-box;
     padding: .28rem;
+    overflow: auto;
   }
   .tabHeadBox {
     display: flex;
@@ -228,7 +390,7 @@ export default {
     justify-content: center;
   }
   .tabHead {
-    width: 12%;
+    width: 15%;
     color: #fff;
     box-sizing: border-box;
     padding: 1%;
@@ -245,7 +407,7 @@ export default {
     justify-content: center;
   }
   .tab {
-    width: 12%;
+    width: 15%;
     color: #fff;
     box-sizing: border-box;
     padding: 1%;
@@ -257,5 +419,15 @@ export default {
   }
   .updata:hover {
     color: #aaa;
+  }
+  .dialog-footer .el-button--warning {
+    color: #333;
+  }
+  .dialog-footer .el-button.is-round {
+    padding: 0.06rem 0.15rem;
+  }
+  .addDialogBody {
+    width: 1.5rem;
+    margin: 0 auto;
   }
 </style>

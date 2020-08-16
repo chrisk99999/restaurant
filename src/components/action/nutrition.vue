@@ -6,12 +6,27 @@
         <el-date-picker
           v-model="month"
           type="month"
-          placeholder="选择月"
+          :placeholder="$t('nutrition.nutritionText1')"
           @change="monthChange">
         </el-date-picker>
       </div>
       <div v-for="(item, i) in monthList" :key="i">
-        <div :class="!item.isSelect ? 'btn' : 'btn btnHover'" @click="selectDate(item)">{{item.lists}}</div>
+        <div :class="!item.isSelect ? 'btn' : 'btn btnHover'" @click="selectDate(item)">{{item.lists}} </div>
+          <div v-if="item.isSelect" style="display: flex;flex-flow: row nowrap;justify-content: space-between;">
+            <div @click="statusChange(1, item)"  :class="item.status === 1 ? 'btn smallBtn btnHover' : 'btn smallBtn'">{{$t("nutrition.nutritionText2")}}</div>
+            <div @click="statusChange(2, item)" :class="item.status === 2 ? 'btn smallBtn btnHover' : 'btn smallBtn'">{{$t("nutrition.nutritionText3")}}</div>
+        </div>
+          <div v-if="item.isSelect" style="display: flex;flex-flow: row nowrap;justify-content: space-between;">
+            <div @click="statusChange(3, item)" :class="item.status === 3 ? 'btn smallBtn btnHover' : 'btn smallBtn'">{{$t("nutrition.nutritionText4")}}</div>
+            <div @click="statusChange(4, item)" :class="item.status === 4 ? 'btn smallBtn btnHover' : 'btn smallBtn'">{{$t("nutrition.nutritionText5")}}</div>
+        </div>
+          <div v-if="item.isSelect" style="display: flex;flex-flow: row nowrap;justify-content: space-between;">
+            <div @click="statusChange(5, item)" :class="item.status === 5 ? 'btn smallBtn btnHover' : 'btn smallBtn'">{{$t("nutrition.nutritionText6")}}</div>
+            <div @click="statusChange(6, item)" :class="item.status === 6 ? 'btn smallBtn btnHover' : 'btn smallBtn'">{{$t("nutrition.nutritionText7")}}</div>
+        </div>
+          <div v-if="item.isSelect" style="display: flex;flex-flow: row nowrap;justify-content: space-between;">
+            <div @click="statusChange(7, item)" :class="item.status === 7 ? 'btn smallBtn btnHover' : 'btn smallBtn'">{{$t("nutrition.nutritionText8")}}</div>
+        </div>
       </div>
     </div>
     <div class="right">
@@ -28,10 +43,10 @@
                   </el-image>
                   <!-- <img src="@/assets/nutrition_01.png" alt=""> -->
                   <div class="cardImgHeadTag" v-if="item.type">
-                    <span style="color: #e9bc2a;padding-left: .02rem;padding-right: .15rem;">人气</span>
-                    <span style="color: #4b3626;">主厨推荐</span>
+                    <span style="color: #e9bc2a;padding-left: .02rem;padding-right: .15rem;">{{$t('nutrition.nutritionText9')}}</span>
+                    <span style="color: #4b3626;">{{$t('nutrition.nutritionText10')}}</span>
                   </div>
-                  <div class="cardImgBottomTag" v-if="item.limit">限量{{item.limit}}</div>
+                  <div class="cardImgBottomTag" v-if="item.limit">{{$t('nutrition.nutritionText16')}}{{item.limit}}</div>
                 </div>
                 <div class="cardContent_box">
                   <div class="cardContent_tit">{{item.title}}</div>
@@ -41,13 +56,13 @@
             </div>
             <div class="card card2">
               <div class="cardText">
-                本周已定 {{item.click}} 份
+                {{$t('nutrition.nutritionText21')}} {{item.click}} {{$t('nutrition.nutritionText22')}}
               </div>
             </div>
           </div>
         </div>
         <div class="bottomBtn" style="padding-right: .15rem;">
-          <el-button type="warning" @click="checkUpdata" round>添加</el-button>
+          <el-button type="warning" @click="checkUpdata" round>{{$t('nutrition.nutritionText11')}}</el-button>
         </div>
       </div>
       <div v-else class="updataBox">
@@ -65,10 +80,10 @@
                   </el-image>
                   <!-- <img src="@/assets/nutrition_01.png" alt=""> -->
                   <div class="cardImgHeadTag" v-if="item.type">
-                    <span style="color: #e9bc2a;padding-left: .02rem;padding-right: .15rem;">人气</span>
-                    <span style="color: #4b3626;">主厨推荐</span>
+                    <span style="color: #e9bc2a;padding-left: .02rem;padding-right: .15rem;">{{$t('nutrition.nutritionText9')}}</span>
+                    <span style="color: #4b3626;">{{$t('nutrition.nutritionText10')}}</span>
                   </div>
-                  <div class="cardImgBottomTag" v-if="item.limit">限量{{item.limit}}</div>
+                  <div class="cardImgBottomTag" v-if="item.limit">{{$t('nutrition.nutritionText16')}}{{item.limit}}</div>
                 </div>
                 <div class="cardContent_box">
                   <div class="cardContent_tit">{{item.title}}</div>
@@ -83,14 +98,14 @@
           </div>
         </div>
         <div class="updataPhone">
-          <el-input v-model="phone.title" placeholder="请输入标题"></el-input>
-          <el-input v-model="phone.num" class="num" style="width: 35%;padding-top: .1rem;font-size: .05rem;"  placeholder="请输入库存">
-            <template slot="prepend">库存：</template>
+          <el-input v-model="phone.title" :placeholder="$t('nutrition.nutritionText17')"></el-input>
+          <el-input v-model="phone.num" class="num" style="width: 35%;padding-top: .1rem;font-size: .05rem;"  :placeholder="$t('nutrition.nutritionText18')">
+            <template slot="prepend">{{$t('nutrition.nutritionText19')}}</template>
           </el-input>
-          <el-input type="textarea" resize="none" v-model="phone.content" :rows="6" placeholder="请输入内容" style="font-size: .1rem;padding-top: .1rem;" ></el-input>
+          <el-input type="textarea" resize="none" v-model="phone.content" :rows="6" :placeholder="$t('nutrition.nutritionText20')" style="font-size: .1rem;padding-top: .1rem;" ></el-input>
           <el-upload
             class="avatar-uploader"
-            action="/admin/admin/api/webUploaderImages"
+            action="/admin/api/webUploaderImages"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload">
@@ -102,8 +117,8 @@
           <div style="margin-top: .1rem;display: flex;">
             <div style="display: flex;margin-right: .2rem;" v-if="phone.type" @click="phone.type = 0">
               <div class="cardImgHeadTag">
-                <span style="color: #e9bc2a;padding-left: .02rem;padding-right: .15rem;">人气</span>
-                <span style="color: #4b3626;">主厨推荐</span>
+                <span style="color: #e9bc2a;padding-left: .02rem;padding-right: .15rem;">{{$t(nutrition.nutritionText9)}}</span>
+                <span style="color: #4b3626;">{{$t(nutrition.nutritionText10)}}</span>
               </div>
               <img style="cursor: pointer;height: 0.15rem;padding-top: .04rem;padding-left: .04rem;" src="@/assets/nutrition_04.png" alt="">
             </div>
@@ -123,7 +138,7 @@
             </div>
           </div>
           <div class="bottomBtn">
-            <el-button type="warning" @click="savePhone" round>保存</el-button>
+            <el-button type="warning" @click="savePhone" round>{{$t('nutrition.nutritionText11')}}</el-button>
           </div>
         </div>
       </div>
@@ -147,12 +162,55 @@ export default {
       monthList: [],
       selectMonth: {},
       isUpdata: false,
-      phone: {},
+      phone: {
+        imageUrl: '',
+        title: ' ',
+        num: '',
+        content: '',
+        time: '',
+        photo: '',
+        type: '',
+        limit: '',
+        week: 1
+
+      },
       melaList: []
     }
   },
-  mounted () {},
+  mounted () {
+  },
   methods: {
+    // 选择天
+    statusChange (status, item) {
+      console.log(item)
+      item.status = status
+      this.phone.week = status
+      let obj = this.$qs.stringify({
+        time: item.time,
+        week: status
+      })
+      this.$api.post('/admin/api/GetMeal', obj).then(res => {
+        if (res.data.code === 1) {
+          console.warn(res.data)
+          let list = res.data.lists
+          let data = []
+          list.forEach(item => {
+            data.push({
+              ...item,
+              imageUrl: item.photo === null ? '' : 'http://ep.zerom.cn' + item.photo
+            })
+          })
+          this.melaList = data
+          if (list.length === 0) {
+            this.$message.error(this.$t('nutrition.nutritionText12'))
+          }
+        } else {
+          console.warn(res.data.msg)
+          this.$message.error(res.data.msg)
+        }
+      })
+    },
+
     // 时间格式转换
     formatDate (date) {
       var year = date.getFullYear()
@@ -164,24 +222,27 @@ export default {
     },
     // 获取月周列表
     getMonthList (date) {
+      console.log(date)
       let obj = this.$qs.stringify({
         date: date
       })
       this.$api.post('/admin/api/weekly', obj).then(res => {
         if (res.data.code === 1) {
-          console.warn(res.data)
+          console.warn(res.data, 'weekly')
           let list = res.data.date
           let data = []
           list.forEach(item => {
             data.push({
               ...item,
-              isSelect: false
+              isSelect: false,
+              status: 1
             })
           })
           data[0].isSelect = true
           this.selectMonth = data[0]
           this.getMeal(this.selectMonth)
           this.monthList = data
+          this.phone.time = this.selectMonth.time
           // this.$router.push({path: '/home'})
         } else {
           console.warn(res.data.msg)
@@ -198,15 +259,19 @@ export default {
       this.monthList.forEach(monthItem => {
         monthItem.isSelect = false
       })
+      console.log(item, '213')
       item.isSelect = true
       this.selectMonth = item
       this.isUpdata = false
       this.getMeal(item)
+      this.phone.time = item.time
+      console.log(this.phone.time)
     },
     // 卡片列表
     getMeal (item) {
       let obj = this.$qs.stringify({
-        time: item.time
+        time: item.time,
+        week: this.phone.week
       })
       this.$api.post('/admin/api/GetMeal', obj).then(res => {
         if (res.data.code === 1) {
@@ -221,7 +286,7 @@ export default {
           })
           this.melaList = data
           if (list.length === 0) {
-            this.$message.error('暂无菜单，请新增菜单或编辑')
+            this.$message.error(this.$t('nutrition.nutritionText12'))
           }
         } else {
           console.warn(res.data.msg)
@@ -240,10 +305,10 @@ export default {
       console.log(file.type)
 
       if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!')
+        this.$message.error(this.$t('nutrition.nutritionText13'))
       }
       if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!')
+        this.$message.error(this.$t('nutrition.nutritionText14'))
       }
       return isJPG && isLt2M
     },
@@ -264,17 +329,19 @@ export default {
         time: this.phone.time,
         photo: this.phone.photo || '',
         type: this.phone.type,
-        limit: this.phone.limit || 0
+        limit: this.phone.limit || 0,
+        week: this.phone.week || 1
       }
+      console.log(this.phone.time)
       if (this.phone.id) {
         obj.id = this.phone.id
       }
+      console.log(obj)
       this.$api.post('/admin/api/InsertSetMeal', this.$qs.stringify({...obj})).then(res => {
         if (res.data.code === 1) {
-          console.log('保存成功')
           this.$message({
             showClose: true,
-            message: '保存成功',
+            message: this.$t('nutrition.nutritionText15'),
             type: 'success'
           })
         } else {
@@ -325,6 +392,7 @@ export default {
   .left {
     padding: .28rem;
     width: 20%;
+    min-width: 218px;
   }
   .left .el-date-editor.el-input {
     width: 100%;
@@ -336,7 +404,7 @@ export default {
   }
   .left .btn {
     padding: .1rem .44rem;
-    font-size: .15rem;
+    font-size: .1rem;
     color: #fb882b;
     background: #3c2a36;
     border: 1px solid #653428;
@@ -347,7 +415,10 @@ export default {
   }
   .left .smallBtn {
     display: inline-block;
-    padding: .34rem .86rem;
+    padding: 0;
+    height: .3rem;
+    line-height: .3rem;
+    width: 45%;
   }
   .left .btnHover,
   .left .btn:hover {
@@ -378,7 +449,7 @@ export default {
     box-sizing: border-box;
     overflow: hidden;
     width: 100%;
-     height: 98%;
+     height: 90%;
     display: flex;
     flex-flow: column;
     padding: 2% 0;

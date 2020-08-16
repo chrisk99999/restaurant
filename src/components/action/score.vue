@@ -3,17 +3,17 @@
     <!-- 评分 -->
     <div class="left">
       <div>
-        <div :class="selectIndex === 0 ? 'btn btnHover' : 'btn'" @click="getEvaluate">营养餐评分</div>
+        <div :class="selectIndex === 0 ? 'btn btnHover' : 'btn'" @click="changeBtn(0)">营养餐评分</div>
       </div>
       <div>
-        <div :class="selectIndex === 1 ? 'btn btnHover' : 'btn'" @click="getSetmeal">固定菜品评价</div>
+        <div :class="selectIndex === 1 ? 'btn btnHover' : 'btn'" @click="changeBtn(1, 0)">固定菜品评价</div>
         <div v-if="selectIndex === 1" style="display: flex;flex-flow: row nowrap;justify-content: space-between;">
-          <div :class="smIndex === 0 ? 'btn smallBtn btnHover' : 'btn smallBtn'" @click="smIndex = 0">查看</div>
-          <div :class="smIndex === 1 ? 'btn smallBtn btnHover' : 'btn smallBtn'" @click="getNowWeekly">编辑</div>
+          <div :class="smIndex === 0 ? 'btn smallBtn btnHover' : 'btn smallBtn'" @click="changeBtn(1, 0)">查看</div>
+          <div :class="smIndex === 1 ? 'btn smallBtn btnHover' : 'btn smallBtn'" @click="changeBtn(1, 1)">编辑</div>
         </div>
       </div>
       <div>
-        <div :class="selectIndex === 2 ? 'btn btnHover' : 'btn'" @click="getRestaurant">餐厅评价</div>
+        <div :class="selectIndex === 2 ? 'btn btnHover' : 'btn'" @click="changeBtn(2)">餐厅评价</div>
       </div>
     </div>
     <div v-if="selectIndex === 0" class="right">
@@ -29,7 +29,7 @@
                 >
               </el-option>
             </el-select>
-            <el-select v-model="week" style="width: 1rem;" placeholder="请选择">
+            <el-select v-model="week" style="width: 1rem;" @change="fliterWeek" placeholder="请选择">
               <el-option
                 v-for="item in weekList"
                 :key="item.value"
@@ -41,38 +41,40 @@
           <div class="headNum">
             <div class="num">
               <img src="@/assets/score_01.png" style="position: absolute;left: -0.05rem;top: 0;width: .2rem;" alt="">
-              1588
+              {{evaluateStatus.like}}
             </div>
             <div class="num">
               <img src="@/assets/score_02.png" style="position: absolute;left: -0.05rem;top: 0;width: .2rem;" alt="">
-              25
+              {{evaluateStatus.dislike}}
             </div>
           </div>
         </div>
-        <div class="li" v-for="(item,i) in dataList " :key ='i'>
+        <template v-if="dataList !==[]">
+        <div class="li" v-for="(item,i) in dataList " :key ='i' >
           <div class="userInfo">
-            姓名 <span>Frank</span>
-            工号 <span>NO.100532</span>
-            已选 <span>套餐A</span>
+            姓名 <span>{{item.name}}</span>
+            工号 <span>NO.{{item.tem}}</span>
+            已选 <span>{{item.title}}</span>
           </div>
           <div class="content">
             {{item.content}}
           </div>
           <div class="time">
             <div style="text-align: right;">
-              <img v-if="item.like" src="@/assets/score_01.png" style="width: .2rem;" alt="">
+              <img v-if="item.like === 1" src="@/assets/score_01.png" style="width: .2rem;" alt="">
               <img v-else src="@/assets/score_02.png" style="width: .2rem;" alt="">
             </div>
-            <p style="color: #aaa;margin-top: 0;">2020.07.27 11:25:53</p>
+            <p style="color: #aaa;margin-top: 0;">{{item.create_time}}</p>
           </div>
         </div>
+        </template>
       </div>
     </div>
     <div v-if="selectIndex === 1 && smIndex === 0" class="right">
       <div class="rightList">
         <div class="listHead">
           <div class="headSelect">
-            <el-select v-model="month" style="width: 1rem;margin-right: .1rem;" placeholder="请选择">
+            <el-select v-model="month" style="width: 1rem;margin-right: .1rem;" @change="fliterMonth" placeholder="请选择">
               <el-option
                 v-for="item in monthList"
                 :key="item.value"
@@ -80,7 +82,7 @@
                 :value="item.value">
               </el-option>
             </el-select>
-            <el-select v-model="week" style="width: 1rem;" placeholder="请选择">
+            <el-select v-model="week" style="width: 1rem;" @change="fliterWeek" placeholder="请选择">
               <el-option
                 v-for="item in weekList"
                 :key="item.value"
@@ -91,18 +93,18 @@
           </div>
           <div class="headNum">
             <div class="num">
-              <img src="@/assets/score_01.png" style="position: absolute;left: -0.05rem;top: 0;width: .2rem;" alt="">
-              1588
+              <img src="@/assets/score_01.png" style="position: absolute;left: -0.05rem;top: 0;width: .19rem;" alt="">
+              {{evaluateStatus.like}}
             </div>
             <div class="num">
-              <img src="@/assets/score_02.png" style="position: absolute;left: -0.05rem;top: 0;width: .2rem;" alt="">
+              <img src="@/assets/score_02.png" style="position: absolute;left: -0.05rem;top: 0;width: .19rem;" alt="">
               25
             </div>
           </div>
         </div>
         <div class="li" v-for="(item, i) in setmealList" :key="i">
           <div class="userInfo">
-            姓名 <span>Frank</span>
+            姓名 <span>{{item.name}}</span>
             工号 <span>NO.100532</span>
             已选 <span>套餐A</span>
           </div>
@@ -111,10 +113,10 @@
           </div>
           <div class="time">
             <div style="text-align: right;">
-              <img v-if="item.like" src="@/assets/score_01.png" style="width: .2rem;" alt="">
+              <img v-if="item.like === 1" src="@/assets/score_01.png" style="width: .2rem;" alt="">
               <img v-else src="@/assets/score_02.png" style="width: .2rem;" alt="">
             </div>
-            <p style="color: #aaa;margin-top: 0;">2020.07.27 11:25:53</p>
+            <p style="color: #aaa;margin-top: 0;">{{item.create_time}}</p>
           </div>
         </div>
       </div>
@@ -124,7 +126,7 @@
         <div class="phoneView">
           <!-- <div class="phone_head">精品菜</div> -->
           <!-- <el-input v-model="phone.title" placeholder="请输入标题"></el-input> -->
-          <el-select v-model="month" class="headSelect1" style="width: 1.5rem;margin: 0 auto;margin-top: .3rem;background: #51352b;" placeholder="请选择">
+          <el-select v-model="month" class="headSelect1" style="width: 1.5rem;margin: 0 auto;margin-top: .3rem;background: #51352b;" @change="fliterMonth" placeholder="请选择">
             <el-option
               v-for="item in monthList"
               :key="item.value"
@@ -193,7 +195,7 @@
       <div class="rightList">
         <div class="listHead">
           <div class="headSelect">
-            <el-select v-model="month" style="width: 1rem;margin-right: .1rem;" placeholder="请选择">
+            <el-select v-model="month" style="width: 1rem;margin-right: .1rem;" @change="fliterMonth" placeholder="请选择">
               <el-option
                 v-for="item in monthList"
                 :key="item.value"
@@ -201,7 +203,7 @@
                 :value="item.value">
               </el-option>
             </el-select>
-            <el-select v-model="week" style="width: 1rem;" placeholder="请选择">
+            <el-select v-model="week" style="width: 1rem;" @change="fliterWeek" placeholder="请选择">
               <el-option
                 v-for="item in weekList"
                 :key="item.value"
@@ -212,7 +214,7 @@
           </div>
           <div class="headNum">
             <el-rate
-              v-model="rate"
+              :value="Number(Number(restaurant).toFixed(1))"
               disabled
               show-score
               text-color="#ff9900">
@@ -221,9 +223,9 @@
         </div>
         <div class="li" v-for="(item, i) in getRestaurantList" :key="i">
           <div class="userInfo" >
-            姓名 <span>Frank</span>
-            工号 <span>NO.100532</span>
-            已选 <span>套餐A</span>
+            姓名 <span>{{item.name}}</span>
+            工号 <span>NO.{{item.tem}}</span>
+            <!-- 已选 <span>套餐A</span> -->
           </div>
           <div class="content">
             {{item.content}}
@@ -231,13 +233,13 @@
           <div class="time">
             <div style="text-align: right;">
               <el-rate
-                v-model="rate"
+                :value="Number(item.stars)"
                 disabled
                 show-score
                 text-color="#ff9900">
               </el-rate>
             </div>
-            <p style="color: #aaa;">2020.07.27 11:25:53</p>
+            <p style="color: #aaa;">{{item.create_time}}</p>
           </div>
         </div>
       </div>
@@ -288,6 +290,9 @@ export default {
         }, {
           label: '第4周',
           value: '4'
+        }, {
+          label: '第5周',
+          value: '5'
         }
       ],
       isReta: false,
@@ -298,68 +303,161 @@ export default {
       getRestaurantList: [],
       boutiqueList: [],
       phone: {},
-      nowWeeklyList: []
+      nowWeeklyList: [],
+      evaluateStatus: {
+        dislike: 0,
+        like: 0
+      },
+      Restaurant: 0,
+      queryMont: '',
+      queryWeek: ''
     }
   },
   mounted () {
     this.getEvaluate()
   },
   methods: {
-    fliterMonth () {
-      console.log(1)
-      console.log(this.month)
-      let i = this.mon.indexOf(this.month)
-      console.log(i)
-      let time = this.monthTime[i]
-      console.log(time)
-      this.$api.post('/admin/api/GetEvaluate', {time}).then(res => {
-        console.log(res)
-        this.dataList = res.data.lists
-      })
+    fliterMonth (val) {
+      this.queryMont = val
+      let saveObj = {
+        time: this.queryMont
+      }
+      let obj = this.$qs.stringify(saveObj)
+      switch (this.selectIndex) {
+        case 0:
+          this.$api.post('/admin/api/GetEvaluate', obj).then(res => {
+            if (res.data.code === 1) {
+              this.dataList = res.data.lists
+            } else {
+              this.$message.error(res.data.msg)
+              this.dataList = []
+            }
+          })
+          break
+        case 1:
+          this.$api.post('/admin/api/GetSetmeal', obj).then(res => {
+            if (res.data.code === 1) {
+              this.setmealList = res.data.lists
+            } else {
+              this.$message.error(res.data.msg)
+              this.setmealList = []
+            }
+          })
+          break
+        case 2:
+          this.$api.post('/admin/api/GetRestaurant', obj).then(res => {
+            if (res.data.code === 1) {
+              this.getRestaurantList = res.data.lists
+            } else {
+              this.$message.error(res.data.msg)
+              this.getRestaurantList = []
+            }
+          })
+          break
+        default:
+          break
+      }
     },
-    getEvaluate () {
+    fliterWeek (i) {
+      this.queryWeek = i
+      let saveObj = {
+        time: this.queryMont,
+        week: this.queryWeek
+      }
+      let obj = this.$qs.stringify(saveObj)
+      switch (this.selectIndex) {
+        case 0:
+          this.$api.post('/admin/api/GetEvaluate', obj).then(res => {
+            if (res.data.code === 1) {
+              this.dataList = res.data.lists
+            } else {
+              this.$message.error(res.data.msg)
+              this.dataList = []
+            }
+          })
+          break
+        case 1:
+          this.$api.post('/admin/api/GetSetmeal', obj).then(res => {
+            if (res.data.code === 1) {
+              this.setmealList = res.data.lists
+            } else {
+              this.$message.error(res.data.msg)
+              this.setmealList = []
+            }
+          })
+          break
+        case 2:
+          this.$api.post('/admin/api/GetRestaurant', obj).then(res => {
+            if (res.data.code === 1) {
+              this.getRestaurantList = res.data.lists
+            } else {
+              this.$message.error(res.data.msg)
+              this.getRestaurantList = []
+            }
+          })
+          break
+        default:
+          break
+      }
+    },
+    getEvaluate (isSelect, val) {
       this.selectIndex = 0
-      this.$api.post('/admin/api/GetEvaluate').then(res => {
+      isSelect = isSelect || false
+      let obj = {}
+      if (isSelect) {
+        let saveObj = {
+          time: val
+        }
+        obj = this.$qs.stringify(saveObj)
+      }
+      this.$api.post('/admin/api/GetEvaluate', obj).then(res => {
+        if (res.data.code !== 1) {
+          this.$message.error(res.data.msg)
+          return
+        }
         console.log(res)
         let resDate = res.data.date
         let data = []
         let mont = []
+        this.evaluateStatus = res.data.status
         res.data.lists.forEach(item => {
           data.push({
             ...item
           })
         })
         this.dataList = data
-        resDate.forEach(item => {
-          if (mont.length === 0) {
-            mont.push({
-              value: item.time,
-              label: item.date + '月'
-            })
-          } else {
-            // mont.forEach(dateItem => {
-            //   console.warn(dateItem, item)
-            //   if () {}
-            // })
-            for (var i = 0; i < mont.length; i++) {
-              let montItem = mont[i]
-              console.warn(mont, item)
-              if (montItem.value !== item.time && i === mont.length - 1) {
-                mont.push({
-                  value: item.time,
-                  label: item.date + '月'
-                })
-                break
+        if (!isSelect) {
+          resDate.forEach(item => {
+            if (mont.length === 0) {
+              mont.push({
+                value: item.time,
+                label: item.date + '月'
+              })
+            } else {
+              for (var i = 0; i < mont.length; i++) {
+                let montItem = mont[i]
+                console.warn(mont, item)
+                if (montItem.value !== item.time && i === mont.length - 1) {
+                  mont.push({
+                    value: item.time,
+                    label: item.date + '月'
+                  })
+                  break
+                }
               }
             }
-          }
-        })
-        this.monthList = mont
+          })
+          this.monthList = mont
+        }
       })
     },
     getSetmeal () {
       this.selectIndex = 1
       this.$api.post('/admin/api/GetSetmeal', {}).then(res => {
+        if (res.data.code !== 1) {
+          this.$message.error(res.data.msg)
+          return
+        }
         console.log(res)
         let resDate = res.data.date
         let data = []
@@ -401,9 +499,14 @@ export default {
       this.selectIndex = 2
       this.$api.post('/admin/api/GetRestaurant', {}).then(res => {
         console.log(res)
+        if (res.data.code !== 1) {
+          this.$message.error(res.data.msg)
+          return
+        }
         let resDate = res.data.date
         let data = []
         let mont = []
+        this.restaurant = res.data.stars
         res.data.lists.forEach(item => {
           data.push({
             ...item
@@ -446,12 +549,30 @@ export default {
       this.$api.post('/admin/api/getNowWeekly', obj).then(res => {
         if (res.data.code === 1) {
           console.log(res)
+        } else {
+          this.$message.error(res.data.msg)
         }
       })
     },
-    changeTime () {
-      // if () {
-      // }
+    changeBtn (index, smIndex) {
+      this.selectIndex = index
+      this.smIndex = smIndex === undefined ? this.smIndex : smIndex
+      this.week = ''
+      if (smIndex === undefined) {
+        this.monthList = []
+        this.month = ''
+      }
+      if (index === 0) {
+        this.getEvaluate()
+      } else if (index === 1) {
+        if (smIndex === 0) {
+          this.getSetmeal()
+        } else {
+          this.getNowWeekly()
+        }
+      } else {
+        this.getRestaurant()
+      }
     }
     // fliterWeek(){
     // }
@@ -474,7 +595,7 @@ export default {
   }
   .left .btn {
     padding: .1rem .44rem;
-    font-size: .15rem;
+    font-size: .1rem;
     color: #fb882b;
     background: #3c2a36;
     border: 1px solid #653428;
@@ -485,8 +606,10 @@ export default {
   }
   .left .smallBtn {
     display: inline-block;
-    padding: .11rem .29rem;
-    box-sizing: border-box;
+    padding: 0;
+    height: .3rem;
+    line-height: .3rem;
+    width: 45%;
   }
   .left .btnHover,
   .left .btn:hover {
@@ -496,8 +619,9 @@ export default {
   }
   .right {
     flex: 1;
-    padding-top: 3%;
+    padding: 3%;
     box-sizing: border-box;
+    height: 90%;
   }
   .rightList {
     height: 100%;
@@ -506,6 +630,7 @@ export default {
     background: #3c2a26;
     box-sizing: border-box;
     padding: .1rem;
+    overflow: auto;
   }
   .listHead {
     text-align: left;
@@ -562,7 +687,7 @@ export default {
     border-radius: .2rem;
   }
   .updataBox .phoneView {
-    width: 2.6rem;
+    width: 2.2rem;
     border: 1px solid #fbcd2b;
     border-radius: .2rem;
     height: 100%;

@@ -1,0 +1,52 @@
+export const head = {
+  tab1: 'Weekly menu',
+  tab2: 'Nutrition plus meal',
+  tab3: 'Restaurant monthly report',
+  tab4: 'Excellent menu',
+  tab5: 'Restaurant team',
+  tab6: 'Employee introduction'
+}
+export const week = {
+  week1: 'Select month',
+  week2: 'breakfast',
+  week3: 'lunch',
+  week4: 'dinner',
+  week5: 'night snack',
+  week6: 'Please enter',
+  week7: 'save',
+  week8: 'edit',
+  week9: 'upload',
+  week10: 'Document:',
+  week11: 'upload',
+  week12: 'Only XLS and xlsx file types can be uploaded',
+  week13: 'operation',
+  week14: 'No Data',
+  week15: 'query was successful！',
+  week16: 'Upload successfu！',
+  week17: 'Only one file can be uploaded',
+  week18: 'Saved successfully'
+}
+export const nutrition = {
+  nutritionText1: 'Select month',
+  nutritionText2: 'Monday',
+  nutritionText3: 'Tuesday',
+  nutritionText4: 'Wednesday',
+  nutritionText5: 'Thursday',
+  nutritionText6: 'Friday',
+  nutritionText7: 'Saturday',
+  nutritionText8: 'Sunday',
+  nutritionText9: 'good',
+  nutritionText10: 'recommend',
+  nutritionText11: 'save',
+  nutritionText12: 'No data',
+  nutritionText13: 'Upload head picture error!',
+  nutritionText14: 'The size of the uploaded picture cannot exceed 2MB!',
+  nutritionText15: 'Saved successfully',
+  nutritionText16: 'Limit',
+  nutritionText17: 'Please enter a title',
+  nutritionText18: 'Please enter inventory',
+  nutritionText19: 'stock:',
+  nutritionText20: 'Please enter the content',
+  nutritionText21: "It's set this week",
+  nutritionText22: 'share'
+}

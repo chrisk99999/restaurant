@@ -1,0 +1,52 @@
+export const head = {
+  tab1: '每周菜谱',
+  tab2: '营养加餐',
+  tab3: '餐厅月报',
+  tab4: '精品菜谱',
+  tab5: '餐厅团队',
+  tab6: '员工介绍'
+}
+export const week = {
+  week1: '选择月',
+  week2: '早餐',
+  week3: '午餐',
+  week4: '晚餐',
+  week5: '宵夜',
+  week6: '请输入',
+  week7: '保存',
+  week8: '编辑',
+  week9: '上传',
+  week10: '文件：',
+  week11: '点击上传',
+  week12: '仅限xls与xlsx文件类型上传',
+  week13: '操作',
+  week14: '暂无数据',
+  week15: '查询成功！',
+  week16: '上传成功！',
+  week17: '只能上传一个文件',
+  week18: '保存成功'
+}
+export const nutrition = {
+  nutritionText1: '选择月',
+  nutritionText2: '周一',
+  nutritionText3: '周二',
+  nutritionText4: '周三',
+  nutritionText5: '周四',
+  nutritionText6: '周五',
+  nutritionText7: '周六',
+  nutritionText8: '周日',
+  nutritionText9: '人气',
+  nutritionText10: '主厨推荐',
+  nutritionText11: '保存',
+  nutritionText12: '暂无数据',
+  nutritionText13: '上传头像图片有误！',
+  nutritionText14: '上传头像图片大小不能超过 2MB!',
+  nutritionText15: '保存成功',
+  nutritionText16: '限量',
+  nutritionText17: '请输入标题',
+  nutritionText18: '请输入库存',
+  nutritionText19: '库存：',
+  nutritionText20: '请输入内容',
+  nutritionText21: '本周已定',
+  nutritionText22: '份'
+}

@@ -58,7 +58,7 @@
         <div class="btnPhone">
           <el-upload
             class="avatar-uploader"
-            action="/admin/admin/api/webUploaderImages"
+            action="/admin/api/webUploaderImages"
             :show-file-list="false"
             :on-success="handleAvatarSuccessVideo"
             :before-upload="beforeAvatarUploadVideo">
@@ -70,7 +70,7 @@
           </el-upload>
           <el-upload
             class="avatar-uploader"
-            action="/admin/admin/api/webUploaderImages"
+            action="/admin/api/webUploaderImages"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload">
@@ -230,6 +230,7 @@ export default {
         item.isSelect = false
       })
       btnItem.isSelect = true
+      this.selectBoutique = btnItem
       this.getBoutique(true, this.selectBoutique)
     },
     delCard (item) {
@@ -271,7 +272,7 @@ export default {
   }
   .left .btn {
     padding: .1rem .44rem;
-    font-size: .15rem;
+    font-size: .1rem;
     color: #fb882b;
     background: #3c2a36;
     border: 1px solid #653428;
@@ -282,8 +283,10 @@ export default {
   }
   .left .smallBtn {
     display: inline-block;
-    padding: .11rem .29rem;
-    box-sizing: border-box;
+    padding: 0;
+    height: .3rem;
+    line-height: .3rem;
+    width: 45%;
   }
   .left .btnHover,
   .left .btn:hover {
@@ -392,6 +395,9 @@ export default {
     font-size: .1rem;
     color: #dc6841;
     padding: .05rem 0;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    overflow:hidden;
   }
   .phoneView .addCard {
     padding: .3rem .37rem;;
@@ -429,5 +435,15 @@ export default {
   }
   .bottomBtn .el-button--warning {
     color: #333;
+  }
+  .cardContent{
+    height: 48px;
+    text-overflow: -o-ellipsis-lastline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
   }
 </style>

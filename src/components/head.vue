@@ -4,14 +4,22 @@
       <img @click="goHome" src="@/assets/head_01.png">
     </div>
     <div class="bodyText">
-      <div :class="index === 1 ? 'tab tabHover' : 'tab'" @click="changeHead(1)">每周菜谱</div>
-      <div :class="index === 2 ? 'tab tabHover' : 'tab'" @click="changeHead(2)">营养加餐</div>
-      <div :class="index === 3 ? 'tab tabHover' : 'tab'" @click="changeHead(3)">餐厅月报</div>
-      <div :class="index === 4 ? 'tab tabHover' : 'tab'" @click="changeHead(4)">精品菜品</div>
-      <div :class="index === 5 ? 'tab tabHover' : 'tab'" @click="changeHead(5)">餐厅团队</div>
-      <div :class="index === 6 ? 'tab tabHover' : 'tab'" @click="changeHead(6)">员工团队</div>
+      <div :class="index === 1 ? 'tab tabHover' : 'tab'" @click="changeHead(1)">{{$t("head.tab1")}}</div>
+      <div :class="index === 2 ? 'tab tabHover' : 'tab'" @click="changeHead(2)">{{$t("head.tab2")}}</div>
+      <div :class="index === 3 ? 'tab tabHover' : 'tab'" @click="changeHead(3)">{{$t("head.tab3")}}</div>
+      <div :class="index === 4 ? 'tab tabHover' : 'tab'" @click="changeHead(4)">{{$t("head.tab4")}}</div>
+      <div :class="index === 5 ? 'tab tabHover' : 'tab'" @click="changeHead(5)">{{$t("head.tab5")}}</div>
+      <div :class="index === 6 ? 'tab tabHover' : 'tab'" @click="changeHead(6)">{{$t("head.tab6")}}</div>
     </div>
     <div class="right">
+      <el-select v-model="msg" @change="langToggle" placeholder="请选择">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
       <span>{{rightText}}</span>
       <img @click="exit" src="@/assets/head_02.png" alt="">
     </div>
@@ -34,6 +42,16 @@ export default {
   components: {},
   data () {
     return {
+      msg: this.$i18n.locale,
+      options: [
+        {
+          label: '中文',
+          value: 'zh'
+        }, {
+          label: 'English',
+          value: 'en'
+        }
+      ]
     }
   },
   mounted () {},
@@ -46,6 +64,10 @@ export default {
     },
     changeHead (type) {
       this.$emit('changeHead', type)
+    },
+    langToggle (val) {
+      console.log(val)
+      this.$i18n.locale = val
     }
   }
 }
@@ -60,11 +82,12 @@ export default {
     background: #2b1814;
   }
   .left {
-    flex: 1;
     padding-top: .05rem;
+    width: 25%;
   }
   .right {
     display: flex;
+    width: 15%;
   }
   .right span {
     color: #fff;
@@ -83,13 +106,15 @@ export default {
     flex: 1;
     color: #fff;
     display: flex;
-    font-size: .12rem;
+    font-size: .1rem;
   }
   .tab {
-    margin-right: .2rem;
+    margin-right: .1rem;
     padding-bottom: .05rem;
     box-sizing: border-box;
     cursor: pointer;
+    flex: 1;
+    text-align: center;
   }
   .tabHover,
   .tab:hover {

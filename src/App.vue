@@ -104,14 +104,15 @@ div::-webkit-scrollbar-track {
   border-radius: 10px;
   background: #ededed;
 }
-.dialog {
-  border: 2px solid #aa8629;
-  border-radius: .1rem;
-  background: #3c2a26;
+.dialog,
+.el-dialog {
+  border: 2px solid #aa8629 !important;
+  border-radius: .1rem !important;
+  background: #3c2a26 !important;
 }
-.team .el-textarea__inner {
+/* .team .el-textarea__inner { */
   /* border: none !important; */
-}
+/* } */
 .score .el-input__inner {
   font-size: inherit !important;
 }
@@ -121,5 +122,38 @@ div::-webkit-scrollbar-track {
   border-color: #663024;
   padding: 0.13rem;
   font-size: .12rem !important;
+}
+.team .updataPhone .el-input__inner {
+  padding-left: .05rem !important;
+}
+.staff .el-input__inner  {
+  font-size: .1rem !important;
+  background: none !important;
+}
+
+.staff .dialogBody .el-input__inner  {
+  font-size: .1rem !important;
+  padding-left: .4rem !important;
+  border-radius: .05rem;
+  border-color: #653428;
+  text-align: right;
+  width: 1.5rem;
+  background: none;
+}
+.week .tab .el-input__inner {
+  height: 0.2rem;
+  background: none;
+  color: #fff;
+  padding: 0 0.078125rem !important;
+  font-size: .09rem !important;
+  text-align: center;
+}
+/* .staff .dialogBody .el-input {
+  width: max-content;
+  margin: 0 auto;
+  display: block;
+} */
+.head .el-input__inner {
+  font-size: .05rem !important;
 }
 </style>

@@ -6,47 +6,68 @@
         <el-date-picker
           v-model="month"
           type="month"
-          placeholder="选择月"
+          :placeholder="$t('week.week1')"
           @change="monthChange">
         </el-date-picker>
       </div>
       <div v-for="(item, i) in monthList" :key="i">
         <div :class="!item.isSelect ? 'btn' : 'btn btnHover'" @click="selectDate(item)">{{item.lists}}</div>
         <div v-if="item.isSelect" style="display: flex;flex-flow: row nowrap;justify-content: space-between;">
-            <div @click="statusChange(0, item)" :class="item.status === 0 ? 'btn smallBtn btnHover' : 'btn smallBtn'">早餐</div>
-            <div @click="statusChange(1, item)" :class="item.status === 1 ? 'btn smallBtn btnHover' : 'btn smallBtn'">中餐</div>
+            <div @click="statusChange(0, item)" :class="item.status === 0 ? 'btn smallBtn btnHover' : 'btn smallBtn'">{{$t("week.week2")}}</div>
+            <div @click="statusChange(1, item)" :class="item.status === 1 ? 'btn smallBtn btnHover' : 'btn smallBtn'">{{$t("week.week3")}}</div>
         </div>
         <div v-if="item.isSelect" style="display: flex;flex-flow: row nowrap;justify-content: space-between;">
-            <div @click="statusChange(2, item)" :class="item.status === 2 ? 'btn smallBtn btnHover' : 'btn smallBtn'">晚餐</div>
-            <div @click="statusChange(3, item)" :class="item.status === 3 ? 'btn smallBtn btnHover' : 'btn smallBtn'">宵夜</div>
+            <div @click="statusChange(2, item)" :class="item.status === 2 ? 'btn smallBtn btnHover' : 'btn smallBtn'">{{$t("week.week4")}}</div>
+            <div @click="statusChange(3, item)" :class="item.status === 3 ? 'btn smallBtn btnHover' : 'btn smallBtn'">{{$t("week.week5")}}</div>
         </div>
       </div>
     </div>
     <div class="right">
       <div class="rightTab">
         <div class="tabHeadBox">
-          <div class="tabHead" v-for="(item, i) in tableHead" :key="i">{{item.name}}</div>
+          <div class="tabHead" v-for="(item, i) in tableHead" :key="i">{{i === tableHead.length - 1 ? $t('week.week13') : item.name}}</div>
         </div>
         <div class="tabBodyBox">
           <div class="tabBody" v-for="(item, i) in tableData" :key="i">
-            <div class="tab">{{item.menu0 || '-'}}</div>
             <div class="tab">{{item.menu1 || '-'}}</div>
-            <div class="tab">{{item.menu2 || '-'}}</div>
-            <div class="tab">{{item.menu3 || '-'}}</div>
-            <div class="tab">{{item.menu4 || '-'}}</div>
-            <div class="tab">{{item.menu5 || '-'}}</div>
-            <div class="tab">{{item.menu6 || '-'}}</div>
-            <div class="tab">{{item.menu7 || '-'}}</div>
+            <div class="tab">
+              <el-input v-if="item.isUpdata && tableHead[1].name !== '+'" v-model="item.menu2" :placeholder="$t('week.week6') + tableHead[1].name"></el-input>
+              <span v-else>{{item.menu2 || '-'}}</span>
+            </div>
+            <div class="tab">
+              <el-input v-if="item.isUpdata && tableHead[2].name !== '+'" v-model="item.menu3" :placeholder="$t('week.week6') + tableHead[2].name"></el-input>
+              <span v-else>{{item.menu3 || '-'}}</span>
+            </div>
+            <div class="tab">
+              <el-input v-if="item.isUpdata && tableHead[3].name !== '+'" v-model="item.menu4" :placeholder="$t('week.week6') + tableHead[3].name"></el-input>
+              <span v-else>{{item.menu4 || '-'}}</span>
+            </div>
+            <div class="tab">
+              <el-input v-if="item.isUpdata && tableHead[4].name !== '+'" v-model="item.menu5" :placeholder="$t('week.week6') + tableHead[4].name"></el-input>
+              <span v-else>{{item.menu5 || '-'}}</span>
+            </div>
+            <div class="tab">
+              <el-input v-if="item.isUpdata && tableHead[5].name !== '+'" v-model="item.menu6" :placeholder="$t('week.week6') + tableHead[5].name"></el-input>
+              <span v-else>{{item.menu6 || '-'}}</span>
+            </div>
+            <div class="tab">
+              <el-input v-if="item.isUpdata && tableHead[6].name !== '+'" v-model="item.menu7" :placeholder="$t('week.week6') + tableHead[6].name"></el-input>
+              <span v-else>{{item.menu7 || '-'}}</span>
+            </div>
+            <div class="tab">
+              <el-input v-if="item.isUpdata && tableHead[7].name !== '+'" v-model="item.menu8" :placeholder="$t('week.week6') + tableHead[7].name"></el-input>
+              <span v-else>{{item.menu8 || '-'}}</span>
+            </div>
+            <div class="tab" @click="changeTab(item)">{{item.isUpdata ? $t('week.week7') : $t('week.week8')}}</div>
           </div>
         </div>
         <div class="bottomBtn"  v-if="monthList.length > 1">
-          <el-button type="warning" style="margin-right: 5%;" round>编辑</el-button>
-          <el-button type="success" @click="dialogVisible = true" round>上传</el-button>
+          <!-- <el-button type="warning" style="margin-right: 5%;" round>编辑</el-button> -->
+          <el-button type="success" @click="dialogVisible = true" round>{{$t('week.week9')}}</el-button>
         </div>
       </div>
     </div>
     <el-dialog
-      title="提示"
       :visible.sync="dialogVisible"
       width="40%"
       custom-class="dialog"
@@ -57,7 +78,7 @@
       <div class="dialogBody">
         <el-upload
           class="upload-demo"
-          action="/admin/admin/api/insertall"
+          action="/admin/api/insertall"
           :on-preview="handlePreview"
           :on-remove="handleRemove"
           :before-remove="beforeRemove"
@@ -68,7 +89,7 @@
           :on-exceed="handleExceed"
           :file-list="fileList"
           :data="{...selectMonth, status: selectMonthStatus, table: 'weekly'}">
-            文件：<el-button size="mini" type="warning">点击上传</el-button> *仅限xls与xlsx文件类型上传
+            {{$t('week.week10')}}<el-button size="mini" type="warning">{{$t('week.week11')}}</el-button> *{{$t('week.week12')}}
         </el-upload>
       </div>
       <!-- <span slot="footer" class="dialog-footer">
@@ -108,19 +129,12 @@ export default {
           name: '+'
         }, {
           name: '+'
+        }, {
+          name: this.$t('week.week13')
         }
       ],
       tableData: [
-        {
-          type: '星期一',
-          setMeal: '红烧豹子头套餐，红烧豹子头套餐',
-          drink: '快乐水',
-          characteristic: '泡面',
-          sideDishes: '火腿',
-          else1: '-',
-          else2: '-',
-          else3: '-'
-        }
+        {}
       ],
       month: '',
       monthList: [],
@@ -226,8 +240,6 @@ export default {
             if (i === 0) {
               thead = [
                 {
-                  name: item.menu0 || '+'
-                }, {
                   name: item.menu1 || '+'
                 }, {
                   name: item.menu2 || '+'
@@ -241,22 +253,30 @@ export default {
                   name: item.menu6 || '+'
                 }, {
                   name: item.menu7 || '+'
+                }, {
+                  name: item.menu8 || '+'
+                }, {
+                  name: this.$t('week.week13')
                 }
               ]
             } else {
-              tdata.push(item)
+              tdata.push({
+                ...item,
+                isUpdata: false
+              })
             }
           })
           if (list.length === 0) {
             for (let i = 0; i < 8; i++) {
               thead.push({name: '+'})
             }
+            thead.push({name: this.$t('week.week13')})
             tdata = [{}]
-            this.$message.error('暂无菜单，请上传菜单或编辑')
+            this.$message.error(this.$t('week.week14'))
           } else {
             this.$message({
               showClose: true,
-              message: '查询成功！',
+              message: this.$t('week.week15'),
               type: 'success'
             })
           }
@@ -296,11 +316,41 @@ export default {
       console.log(file, fileList)
     },
     handleExceed (files, fileList) {
-      this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
+      this.$message.warning(this.$t('week.week17'))
     },
     beforeRemove (file, fileList) {
       // return this.$confirm(`确定移除 ${ file.name }？`)
       console.log(file, fileList)
+    },
+    // 编辑
+    changeTab (item) {
+      item.isUpdata = !item.isUpdata
+      if (!item.isUpdata) {
+        this.save(item)
+      }
+    },
+    save (item) {
+      let obj = this.$qs.stringify({
+        id: item.id,
+        menu2: item.menu2,
+        menu3: item.menu3,
+        menu4: item.menu4,
+        menu5: item.menu5
+      })
+      this.$api.post('/admin/api/editWeekly', obj).then(res => {
+        if (res.data.code === 1) {
+          // this.$router.push({path: '/home'})
+          this.$message({
+            showClose: true,
+            message: this.$t('week.week18'),
+            type: 'success'
+          })
+          this.weeklySelect()
+        } else {
+          console.warn(res.data.msg)
+          this.$message.error(res.data.msg)
+        }
+      })
     }
   }
 }
@@ -313,7 +363,7 @@ export default {
     display: flex;
   }
   .left {
-    padding: .28rem;
+    padding: .1rem .28rem;
     width: 20%;
   }
   .week .left .el-date-editor.el-input {
@@ -326,7 +376,7 @@ export default {
   }
   .left .btn {
     padding: .1rem .44rem;
-    font-size: .15rem;
+    font-size: .1rem;
     color: #fb882b;
     background: #3c2a36;
     border: 1px solid #653428;
@@ -337,8 +387,10 @@ export default {
   }
   .left .smallBtn {
     display: inline-block;
-    padding: .11rem .29rem;
-    box-sizing: border-box;
+    padding: 0;
+    height: .3rem;
+    line-height: .3rem;
+    width: 45%;
   }
   /* .left .smallBtn {
     display: inline-block;
@@ -371,12 +423,19 @@ export default {
     width: 100%;
   }
   .tabHead {
-    width: 12%;
+    width: 11%;
     color: #fff;
     box-sizing: border-box;
     padding: 2% 1%;
     border: 1px solid #4c322b;
     font-size: .1rem;
+  }
+  /* .tab:last-child,
+  .tabHead:last-child{
+    width: 7%;
+  } */
+  .tab:last-child {
+    cursor: pointer;
   }
   .tabHead:nth-child(2) {
     flex: 1;
@@ -390,7 +449,7 @@ export default {
     width: 100%;
   }
   .tab {
-    width: 12%;
+    width: 11%;
     color: #fff;
     box-sizing: border-box;
     padding: 1%;
